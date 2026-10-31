@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Productos · Mockups StockFX</title>
+    <link rel="stylesheet" href="mockup.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
+      <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8.5 12 3 3 8.5v7L12 21l9-5.5z"/><path d="m3 8.5 9 5 9-5"/><path d="M12 13.5V21"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10.5 9-7.5 9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></symbol>
+      <symbol id="i-package" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5"/><path d="M12 12v9"/></symbol>
+      <symbol id="i-moves" viewBox="0 0 24 24"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></symbol>
+      <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 11 3.8H4v7l9.6 9.6a2 2 0 0 0 2.8 0l4.2-4.2a2 2 0 0 0 0-2.8Z"/><circle cx="7.6" cy="7.6" r="1.2"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M2 20h20"/></symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></symbol>
+      <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+      <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8Z"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19Z"/><path d="M12 9v5"/><path d="M12 17.5v.5"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+      <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="3.5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="3.5" cy="18" r="1" fill="currentColor" stroke="none"/></symbol>
+    </svg>
+
+    <div class="preview-bar">
+      <div class="preview-brand">StockFX <span>· mockups productos</span></div>
+      <div class="preview-tabs" role="tablist" aria-label="Propuestas">
+        <button data-variant-btn="v1" role="tab">A · Tabla limpia</button>
+        <button data-variant-btn="v2" role="tab">B · Stock primero</button>
+        <button data-variant-btn="v3" role="tab">C · Cards</button>
+        <button data-variant-btn="v4" role="tab">D · Master-detail</button>
+        <button data-variant-btn="v5" class="active" role="tab">E · Híbrida A+B</button>
+      </div>
+      <div class="preview-note">Redimensioná la ventana para ver el responsive</div>
+    </div>
+
+    <div class="app">
+      <aside class="sidebar">
+        <a class="brand" href="#">
+          <span class="brand-mark"><svg class="icon"><use href="#i-box"/></svg></span>
+          <span>StockFX</span>
+        </a>
+        <nav>
+          <p class="nav-label">Principal</p>
+          <a class="nav-item" href="#"><svg class="icon"><use href="#i-home"/></svg> Inicio</a>
+          <p class="nav-label">Inventario</p>
+          <a class="nav-item active" href="#"><svg class="icon"><use href="#i-package"/></svg> Productos</a>
+          <a class="nav-item" href="#"><svg class="icon"><use href="#i-moves"/></svg> Movimientos</a>
+          <a class="nav-item" href="#"><svg class="icon"><use href="#i-tag"/></svg> Categorías</a>
+          <a class="nav-item" href="#"><svg class="icon"><use href="#i-alert"/></svg> Stock bajo <span class="nav-badge">32</span></a>
+          <p class="nav-label">Sistema</p>
+          <a class="nav-item" href="#"><svg class="icon"><use href="#i-sliders"/></svg> Configuración</a>
+        </nav>
+        <div class="sidebar-foot">
+          <span class="avatar">MS</span>
+          <div class="user"><strong>María Sosa</strong><span>Administrador</span></div>
+          <button class="icon-btn" aria-label="Cerrar sesión"><svg class="icon"><use href="#i-logout"/></svg></button>
+        </div>
+      </aside>
+
+      <div class="main-wrap">
+        <div class="mobile-topbar">
+          <button class="icon-btn" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+          <a class="brand" href="#">
+            <span class="brand-mark"><svg class="icon"><use href="#i-box"/></svg></span>
+            <span>StockFX</span>
+          </a>
+          <span class="avatar">MS</span>
+        </div>
+
+        <main class="main">
+          <!-- ══════════════ A · Tabla limpia ══════════════ -->
+          <section class="variant v1" data-variant="v1">
+            <header class="page-head">
+              <div>
+                <div class="page-eyebrow">Inventario / Productos</div>
+                <h1>Productos <span class="count-badge">1.420</span></h1>
+                <p class="page-sub">Gestioná tu catálogo, precios y niveles de stock.</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn btn-ghost"><svg class="icon"><use href="#i-download"/></svg> Exportar</button>
+                <button class="btn btn-primary"><svg class="icon"><use href="#i-plus"/></svg> Nuevo producto</button>
+              </div>
+            </header>
+
+            <div class="toolbar">
+              <label class="search"><svg class="icon"><use href="#i-search"/></svg><input placeholder="Buscar nombre, código o categoría..." aria-label="Buscar" /></label>
+              <select class="select" aria-label="Categoría">
+                <option>Todas las categorías</option><option>Motores</option><option>Neumática</option><option>Sensores</option><option>Conectividad</option><option>Ferretería</option>
+              </select>
+              <div class="segmented" role="group" aria-label="Estado">
+                <button class="active">Todos <span class="n">1.420</span></button>
+                <button>En stock <span class="n">1.380</span></button>
+                <button>Bajo <span class="n">32</span></button>
+                <button>Sin stock <span class="n">8</span></button>
+              </div>
+              <select class="select" aria-label="Ordenar"><option>Ordenar: recientes</option><option>Nombre A–Z</option><option>Stock: menor a mayor</option><option>Precio: mayor a menor</option></select>
+            </div>
+
+            <div class="table-card">
+              <div class="table-wrap">
+                <table class="data">
+                  <colgroup>
+                    <col style="width:4%" /><col style="width:30%" /><col class="col-sku" style="width:11%" /><col class="col-cat" style="width:14%" />
+                    <col style="width:10%" /><col style="width:13%" /><col style="width:10%" /><col style="width:8%" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th><input class="check" type="checkbox" aria-label="Seleccionar todos" /></th>
+                      <th>Nombre</th><th class="col-sku">Código</th><th class="col-cat">Categoría</th>
+                      <th>Venta</th><th>Stock actual</th><th>Estado</th><th style="text-align:right">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="v1-body"></tbody>
+                </table>
+              </div>
+              <div class="table-foot">
+                <span>Mostrando <strong>1–10</strong> de <strong>1.420</strong> productos</span>
+                <div class="foot-right">
+                  <span>Filas por página</span>
+                  <select class="foot-select" aria-label="Filas por página"><option>10</option><option>25</option><option>50</option></select>
+                  <div class="pager">
+                    <button aria-label="Anterior"><svg class="icon" style="width:13px;height:13px"><use href="#i-chevron-left"/></svg></button>
+                    <button class="active">1</button><button>2</button><button>3</button><span class="dots">…</span><button>142</button>
+                    <button aria-label="Siguiente"><svg class="icon" style="width:13px;height:13px"><use href="#i-chevron-right"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-list" id="v1-mobile"></div>
+            <div class="load-more"><button class="btn btn-ghost">Cargar más productos</button></div>
+          </section>
+
+          <!-- ══════════════ B · Stock primero ══════════════ -->
+          <section class="variant v2" data-variant="v2">
+            <header class="page-head">
+              <div>
+                <div class="page-eyebrow">Inventario / Productos</div>
+                <h1>Productos <span class="count-badge">1.420</span></h1>
+                <p class="page-sub">Priorizá reposiciones según el nivel de stock.</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn btn-ghost"><svg class="icon"><use href="#i-download"/></svg> Exportar</button>
+                <button class="btn btn-primary"><svg class="icon"><use href="#i-plus"/></svg> Nuevo producto</button>
+              </div>
+            </header>
+
+            <div class="stock-summary">
+              <div class="sum"><span class="sum-ico ok"><svg class="icon"><use href="#i-check"/></svg></span><div><div class="sum-val">1.380</div><div class="sum-lbl">En stock</div></div></div>
+              <div class="sum"><span class="sum-ico low"><svg class="icon"><use href="#i-alert"/></svg></span><div><div class="sum-val">32</div><div class="sum-lbl">Bajo el mínimo</div></div></div>
+              <div class="sum"><span class="sum-ico out"><svg class="icon"><use href="#i-x"/></svg></span><div><div class="sum-val">8</div><div class="sum-lbl">Sin stock</div></div></div>
+            </div>
+
+            <div class="toolbar">
+              <label class="search"><svg class="icon"><use href="#i-search"/></svg><input placeholder="Buscar nombre, código o categoría..." aria-label="Buscar" /></label>
+              <select class="select" aria-label="Categoría"><option>Todas las categorías</option><option>Motores</option><option>Neumática</option><option>Sensores</option></select>
+              <div class="segmented" role="group" aria-label="Estado">
+                <button class="active">Todos</button><button>En stock</button><button>Bajo</button><button>Sin stock</button>
+              </div>
+              <select class="select" aria-label="Ordenar"><option>Ordenar: nivel de stock</option><option>Nombre A–Z</option><option>Precio: mayor a menor</option></select>
+            </div>
+
+            <div class="table-card">
+              <div class="table-wrap">
+                <table class="data">
+                  <colgroup>
+                    <col style="width:4%" /><col style="width:31%" /><col class="col-cat" style="width:12%" />
+                    <col style="width:9%" /><col style="width:25%" /><col style="width:11%" /><col style="width:8%" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th><input class="check" type="checkbox" aria-label="Seleccionar todos" /></th>
+                      <th>Nombre</th><th class="col-cat">Categoría</th><th>Venta</th><th>Nivel de stock</th><th>Estado</th><th style="text-align:right">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="v2-body"></tbody>
+                </table>
+              </div>
+              <div class="table-foot">
+                <span>Mostrando <strong>1–10</strong> de <strong>1.420</strong> productos</span>
+                <div class="foot-right">
+                  <span>Filas por página</span>
+                  <select class="foot-select" aria-label="Filas por página"><option>10</option><option>25</option><option>50</option></select>
+                  <div class="pager">
+                    <button aria-label="Anterior"><svg class="icon" style="width:13px;height:13px"><use href="#i-chevron-left"/></svg></button>
+                    <button class="active">1</button><button>2</button><button>3</button><span class="dots">…</span><button>142</button>
+                    <button aria-label="Siguiente"><svg class="icon" style="width:13px;height:13px"><use href="#i-chevron-right"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-list" id="v2-mobile"></div>
+          </section>
+
+          <!-- ══════════════ C · Cards ══════════════ -->
+          <section class="variant v3" data-variant="v3">
+            <header class="page-head">
+              <div>
+                <div class="page-eyebrow">Inventario / Productos</div>
+                <h1>Productos <span class="count-badge">1.420</span></h1>
+                <p class="page-sub">Explorá el catálogo de forma visual.</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn btn-ghost"><svg class="icon"><use href="#i-download"/></svg> Exportar</button>
+                <button class="btn btn-primary"><svg class="icon"><use href="#i-plus"/></svg> Nuevo producto</button>
+              </div>
+            </header>
+
+            <div class="toolbar">
+              <label class="search"><svg class="icon"><use href="#i-search"/></svg><input placeholder="Buscar nombre, código o categoría..." aria-label="Buscar" /></label>
+              <div class="segmented" role="group" aria-label="Estado">
+                <button class="active">Todos</button><button>En stock</button><button>Bajo</button><button>Sin stock</button>
+              </div>
+              <select class="select" aria-label="Ordenar"><option>Ordenar: recientes</option><option>Nombre A–Z</option><option>Precio: mayor a menor</option></select>
+              <div class="view-toggle" role="group" aria-label="Vista">
+                <button class="active" aria-label="Vista de tarjetas"><svg class="icon"><use href="#i-grid"/></svg></button>
+                <button aria-label="Vista de tabla"><svg class="icon"><use href="#i-list"/></svg></button>
+              </div>
+            </div>
+
+            <div class="product-grid" id="v3-grid"></div>
+            <div class="grid-foot">
+              <span class="count-desktop">Mostrando <strong>12</strong> de <strong>1.420</strong> productos</span>
+              <span class="count-tablet">Mostrando <strong>6</strong> de <strong>1.420</strong> productos</span>
+              <span class="count-mobile">Mostrando <strong>4</strong> de <strong>1.420</strong> productos</span>
+              <button class="btn btn-ghost">Cargar más</button>
+            </div>
+          </section>
+
+          <!-- ══════════════ D · Master-detail ══════════════ -->
+          <section class="variant v4" data-variant="v4">
+            <header class="page-head">
+              <div>
+                <div class="page-eyebrow">Inventario / Productos</div>
+                <h1>Productos <span class="count-badge">1.420</span></h1>
+                <p class="page-sub">Seleccioná un producto para ver su detalle y movimientos.</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn btn-ghost"><svg class="icon"><use href="#i-download"/></svg> Exportar</button>
+                <button class="btn btn-primary"><svg class="icon"><use href="#i-plus"/></svg> Nuevo producto</button>
+              </div>
+            </header>
+
+            <div class="split">
+              <div class="panel list-panel">
+                <div class="list-head">
+                  <label class="search"><svg class="icon"><use href="#i-search"/></svg><input placeholder="Buscar producto..." aria-label="Buscar" /></label>
+                  <div class="segmented" role="group" aria-label="Estado">
+                    <button class="active">Todos</button><button>Bajo</button><button>Sin stock</button>
+                  </div>
+                </div>
+                <div class="list-scroll" id="v4-list"></div>
+                <p class="mobile-hint">Tocá un producto para abrir el detalle a pantalla completa.</p>
+              </div>
+              <div class="panel detail" id="v4-detail"></div>
+            </div>
+          </section>
+
+          <!-- ══════════════ E · Híbrida A + B ══════════════ -->
+          <section class="variant v5 active" data-variant="v5">
+            <header class="page-head">
+              <div>
+                <div class="page-eyebrow">Inventario / Productos</div>
+                <h1>Productos <span class="count-badge">1.420</span></h1>
+                <p class="page-sub">Tabla limpia con nivel de stock para priorizar reposiciones.</p>
+              </div>
+              <div class="head-actions">
+                <button class="btn btn-ghost"><svg class="icon"><use href="#i-download"/></svg> Exportar</button>
+                <button class="btn btn-primary"><svg class="icon"><use href="#i-plus"/></svg> Nuevo producto</button>
+              </div>
+            </header>
+
+            <div class="toolbar">
+              <label class="search"><svg class="icon"><use href="#i-search"/></svg><input placeholder="Buscar nombre, código o categoría..." aria-label="Buscar" /></label>
+              <select class="select" aria-label="Categoría">
+                <option>Todas las categorías</option><option>Motores</option><option>Neumática</option><option>Sensores</option><option>Conectividad</option><option>Ferretería</option>
+              </select>
+              <select class="select estado-select" id="v5-active-filter" aria-label="Filtrar por estado">
+                <option value="activos" selected>Activos</option>
+                <option value="inactivos">Inactivos</option>
+                <option value="todos">Ambos</option>
+              </select>
+              <span class="sort-wrap">
+                <svg class="icon" aria-hidden="true"><use href="#i-moves"/></svg>
+                <select class="select sort-select" id="v5-sort" aria-label="Ordenar">
+                  <option value="recent" selected>Ordenar: recientes</option>
+                  <option value="name">Nombre A–Z</option>
+                  <option value="stock-desc">Stock: mayor a menor</option>
+                  <option value="stock-asc">Stock: menor a mayor</option>
+                  <option value="price-desc">Precio: mayor a menor</option>
+                </select>
+              </span>
+            </div>
+
+            <div class="table-card">
+              <div class="table-wrap">
+                <table class="data">
+                  <colgroup>
+                    <col style="width:4%" /><col style="width:28%" /><col class="col-sku" style="width:9%" /><col class="col-cat" style="width:11%" />
+                    <col class="col-costo" style="width:8%" /><col style="width:8%" /><col style="width:14%" /><col style="width:9%" /><col style="width:9%" />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th><input class="check" type="checkbox" aria-label="Seleccionar todos" /></th>
+                      <th>Nombre</th><th class="col-sku">Código</th><th class="col-cat">Categoría</th>
+                      <th class="num">Costo</th><th class="num">Venta</th><th>Stock</th><th>Estado</th><th style="text-align:right">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="v5-body"></tbody>
+                </table>
+              </div>
+              <div class="table-foot">
+                <span id="v5-count">Mostrando <strong>1–10</strong> de <strong>1.420</strong> productos</span>
+                <div class="foot-right">
+                  <span>Filas por página</span>
+                  <select class="foot-select" aria-label="Filas por página"><option>10</option><option>25</option><option>50</option></select>
+                  <div class="pager">
+                    <button aria-label="Anterior"><svg class="icon" style="width:13px;height:13px"><use href="#i-chevron-left"/></svg></button>
+                    <button class="active">1</button><button>2</button><button>3</button><span class="dots">…</span><button>142</button>
+                    <button aria-label="Siguiente"><svg class="icon" style="width:13px;height:13px"><use href="#i-chevron-right"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-list" id="v5-mobile"></div>
+            <div class="load-more"><button class="btn btn-ghost">Cargar más productos</button></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const PRODUCTS = [
+        { name: 'Motorreductor Trifásico 1.5 HP 1400 RPM', desc: 'Cobre bobinado', sku: 'MOT-1400', cat: 'Motores', costo: 180.0, price: 245.0, stock: 42, min: 10, max: 60, activo: true, letter: 'MO', tone: 'b', cover: 'motores' },
+        { name: 'Válvula Reguladora Industrial V-40', desc: 'Presión regulable 0-12 bar', sku: 'VAL-8821', cat: 'Neumática', costo: 52.0, price: 84.5, stock: 3, min: 15, max: 40, activo: true, letter: 'VA', tone: 'c', cover: 'neumatica' },
+        { name: 'Sensor de Proximidad Laser Pro', desc: 'Rango 500mm NPN NO/NC', sku: 'SEN-1044', cat: 'Sensores', costo: 78.0, price: 120.0, stock: 0, min: 10, max: 30, activo: true, letter: 'SE', tone: 'v', cover: 'sensores' },
+        { name: 'Cable UTP Blindado Bobina 305m', desc: 'Cat6 FTP exterior resistente UV', sku: 'CAB-305U', cat: 'Conectividad', costo: 61.0, price: 95.0, stock: 2, min: 8, max: 25, activo: false, letter: 'CA', tone: 'g', cover: 'conectividad' },
+        { name: 'Rodamiento Cónico 55mm SKF', desc: 'Acero templado alta carga dinámica', sku: 'ROD-5510', cat: 'Ferretería Industrial', costo: 11.5, price: 18.2, stock: 12, min: 20, max: 80, activo: true, letter: 'RO', tone: 'a', cover: 'ferreteria' },
+        { name: 'Fuente Switching Industrial 24V 10A', desc: 'Montaje en riel DIN 240W', sku: 'FUE-2410', cat: 'Eléctrico', costo: 36.0, price: 54.0, stock: 85, min: 15, max: 100, activo: true, letter: 'FU', tone: 'o', cover: 'electrico' },
+        { name: 'Caja de Conectores RJ45 Cat6 (100u)', desc: 'Contactos bañados en oro 50µ', sku: 'CON-1086', cat: 'Conectividad', costo: 8.9, price: 14.5, stock: 210, min: 30, max: 300, activo: true, letter: 'CO', tone: 'g', cover: 'conectividad' },
+        { name: 'Kit Llaves Allen Milimétricas 1.5-10mm', desc: 'Acero Cr-V profesional 9 piezas', sku: 'HER-1015', cat: 'Herramientas', costo: 13.5, price: 22.0, stock: 64, min: 12, max: 90, activo: true, letter: 'HE', tone: 'p', cover: 'herramientas' },
+        { name: 'Guantes de Nitrilo Caja x100', desc: 'Talle M, sin polvo, uso general', sku: 'EPP-2210', cat: 'Seguridad', costo: 8.2, price: 12.8, stock: 9, min: 25, max: 80, activo: true, letter: 'GU', tone: 'p', cover: 'seguridad' },
+        { name: 'Taladro Percutor 750W', desc: 'Velocidad variable, mandril 13mm', sku: 'TAL-3300', cat: 'Herramientas', costo: 95.0, price: 138.0, stock: 0, min: 5, max: 25, activo: true, letter: 'TA', tone: 'o', cover: 'herramientas' },
+        { name: 'Llave de Impacto Neumática 1/2 pulg.', desc: 'Par máximo 450 Nm, 7000 rpm', sku: 'LLA-4400', cat: 'Herramientas', costo: 128.0, price: 189.0, stock: 18, min: 6, max: 40, activo: true, letter: 'LI', tone: 'b', cover: 'herramientas' },
+        { name: 'Cinta Aisladora Temflex 10u', desc: 'PVC 0.18mm, 19mm x 20m', sku: 'CIN-1150', cat: 'Eléctrico', costo: 5.1, price: 8.4, stock: 12, min: 20, max: 60, activo: true, letter: 'CI', tone: 'c', cover: 'electrico' }
+      ]
+
+      const PAGE = PRODUCTS.slice(0, 10)
+
+      const money = (value) => '$' + value.toFixed(2)
+
+      function statusOf(p) {
+        if (p.stock === 0) return { key: 'out', label: 'Sin stock' }
+        if (p.stock <= p.min) return { key: 'low', label: 'Bajo' }
+        return { key: 'ok', label: 'En stock' }
+      }
+
+      // Semáforo de stock: umbrales sobre el mínimo
+      const STOCK_CRITICAL_RATIO = 0.5
+      const STOCK_OK_RATIO = 1
+
+      function stockLevel(p) {
+        if (p.stock <= 0) return { key: 'out', label: 'Sin stock' }
+        const ratio = p.min > 0 ? p.stock / p.min : 2
+        if (ratio < STOCK_CRITICAL_RATIO) return { key: 'out', label: 'Crítico' }
+        if (ratio <= STOCK_OK_RATIO) return { key: 'low', label: 'Reponer' }
+        return { key: 'ok', label: 'OK' }
+      }
+
+      const statusChip = (p) => {
+        const st = statusOf(p)
+        return `<span class="status ${st.key}"><i></i>${st.label}</span>`
+      }
+
+      const rowActions = (p) => `
+        <button class="icon-btn" aria-label="Ver ${p.name}"><svg class="icon"><use href="#i-eye"/></svg></button>
+        <button class="icon-btn" aria-label="Editar ${p.name}"><svg class="icon"><use href="#i-pencil"/></svg></button>
+        <button class="icon-btn" aria-label="Más acciones de ${p.name}"><svg class="icon"><use href="#i-more"/></svg></button>`
+
+      const tableActions = rowActions
+      const cardActions = (p) => `
+        <button class="icon-btn" aria-label="Ver ${p.name}"><svg class="icon"><use href="#i-eye"/></svg></button>
+        <button class="icon-btn" aria-label="Editar ${p.name}"><svg class="icon"><use href="#i-pencil"/></svg></button>`
+
+      function meterHtml(p, level = statusOf(p)) {
+        const fill = Math.min(100, (p.stock / p.max) * 100)
+        const minLeft = Math.min(100, (p.min / p.max) * 100)
+        return `<div class="meter" role="img" aria-label="${level.label}" title="${level.label}"><div class="meter-fill ${level.key}" style="width:${fill}%"></div><div class="meter-min" style="left:${minLeft}%"></div></div>`
+      }
+
+      /* ── A ─────────────────────────────────────────────────────────── */
+      document.getElementById('v1-body').innerHTML = PAGE.map((p) => `
+        <tr>
+          <td><input class="check" type="checkbox" aria-label="Seleccionar ${p.name}" /></td>
+          <td><div class="prod"><span class="thumb ${p.tone}">${p.letter}</span><div class="prod-text"><div class="prod-name" title="${p.name}">${p.name}</div><div class="prod-desc">${p.desc}</div></div></div></td>
+          <td class="col-sku"><span class="sku">${p.sku}</span></td>
+          <td class="col-cat"><span class="cat-plain">${p.cat}</span></td>
+          <td><span class="price">${money(p.price)}</span></td>
+          <td><div class="stock-simple"><strong>${p.stock} un.</strong><span>mín. ${p.min}</span></div></td>
+          <td>${statusChip(p)}</td>
+          <td><div class="row-actions">${tableActions(p)}</div></td>
+        </tr>`).join('')
+
+      document.getElementById('v1-mobile').innerHTML = PRODUCTS.slice(0, 6).map((p) => `
+        <article class="m-card">
+          <div class="m-card-top">
+            <span class="thumb ${p.tone}">${p.letter}</span>
+            <div class="m-card-info"><div class="m-card-name">${p.name}</div><div class="m-card-sub">${p.sku} · ${p.cat}</div></div>
+            ${statusChip(p)}
+          </div>
+          <div class="m-card-mid"><span class="m-price">${money(p.price)}</span><span class="m-stock">Stock ${p.stock} un. · mín. ${p.min}</span></div>
+          <div class="m-card-foot">${rowActions(p)}</div>
+        </article>`).join('')
+
+      /* ── B ─────────────────────────────────────────────────────────── */
+      document.getElementById('v2-body').innerHTML = PAGE.map((p) => `
+        <tr>
+          <td><input class="check" type="checkbox" aria-label="Seleccionar ${p.name}" /></td>
+          <td><div class="prod"><span class="thumb ${p.tone}">${p.letter}</span><div class="prod-text"><div class="prod-name" title="${p.name}">${p.name}</div><div class="prod-desc">${p.sku} · ${p.desc}</div></div></div></td>
+          <td class="col-cat"><span class="cat-plain">${p.cat}</span></td>
+          <td><span class="price">${money(p.price)}</span></td>
+          <td>
+            <div class="stock-block">
+              <div class="stock-line">${p.stock} un. <small>/ ${p.max}</small></div>
+              ${meterHtml(p)}
+              <div class="stock-note">mín. ${p.min} · máx. ${p.max}</div>
+            </div>
+          </td>
+          <td>${statusChip(p)}</td>
+          <td><div class="row-actions">${tableActions(p)}</div></td>
+        </tr>`).join('')
+
+      document.getElementById('v2-mobile').innerHTML = PRODUCTS.slice(0, 5).map((p) => `
+        <article class="m-card">
+          <div class="m-card-top">
+            <span class="thumb ${p.tone}">${p.letter}</span>
+            <div class="m-card-info"><div class="m-card-name">${p.name}</div><div class="m-card-sub">${p.sku} · ${p.cat}</div></div>
+            ${statusChip(p)}
+          </div>
+          <div class="m-card-mid"><span class="m-price">${money(p.price)}</span><span class="m-stock">${p.stock} de ${p.max} un.</span></div>
+          ${meterHtml(p)}
+          <div class="m-card-foot">${rowActions(p)}</div>
+        </article>`).join('')
+
+      /* ── C ─────────────────────────────────────────────────────────── */
+      document.getElementById('v3-grid').innerHTML = PRODUCTS.map((p) => `
+        <article class="p-card">
+          <div class="p-cover cover-${p.cover}">
+            <span class="thumb ${p.tone}">${p.letter}</span>
+            ${statusChip(p)}
+          </div>
+          <div class="p-body">
+            <span class="p-cat">${p.cat}</span>
+            <h3 class="p-name">${p.name}</h3>
+            <span class="p-sku">${p.sku}</span>
+            <div class="p-foot">
+              <div><div class="p-price">${money(p.price)}</div><div class="p-stock">${p.stock} un. · mín. ${p.min}</div></div>
+              <div class="row-actions">${cardActions(p)}</div>
+            </div>
+          </div>
+        </article>`).join('')
+
+      /* ── D ─────────────────────────────────────────────────────────── */
+      let selected = 0
+
+      function renderV4() {
+        document.getElementById('v4-list').innerHTML = PRODUCTS.map((p, index) => {
+          const st = statusOf(p)
+          return `
+            <div class="list-item ${index === selected ? 'active' : ''}" data-index="${index}">
+              <span class="thumb ${p.tone}">${p.letter}</span>
+              <div class="li-main">
+                <div class="li-name">${p.name}</div>
+                <div class="li-meta">${p.sku} · ${p.cat}</div>
+              </div>
+              <div class="li-right">
+                <div class="li-stock ${st.key}">${p.stock} un.</div>
+                <div class="li-price">${money(p.price)}</div>
+              </div>
+            </div>`
+        }).join('')
+
+        const p = PRODUCTS[selected]
+        const st = statusOf(p)
+        const fill = Math.min(100, (p.stock / p.max) * 100)
+        const minLeft = Math.min(100, (p.min / p.max) * 100)
+        const missing = Math.max(0, p.max - p.stock)
+        const note = st.key === 'ok'
+          ? `Nivel saludable: ${p.stock - p.min} un. por encima del mínimo.`
+          : st.key === 'low'
+            ? `Reposición sugerida: sumar ${missing} un. para alcanzar el máximo (${p.max}).`
+            : `Sin stock. Reponer ${missing} un. para cubrir el máximo (${p.max}).`
+
+        document.getElementById('v4-detail').innerHTML = `
+          <div class="detail-head">
+            <span class="thumb ${p.tone}">${p.letter}</span>
+            <div class="detail-title">
+              <h3>${p.name}</h3>
+              <div class="detail-meta">${statusChip(p)}<span>${p.sku}</span><span>·</span><span>${p.cat}</span></div>
+            </div>
+            <div class="detail-actions">
+              <button class="btn btn-ghost"><svg class="icon"><use href="#i-pencil"/></svg> Editar</button>
+              <button class="btn btn-primary"><svg class="icon"><use href="#i-moves"/></svg> Movimiento</button>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><div class="stat-l">Precio venta</div><div class="stat-v">${money(p.price)}</div></div>
+            <div class="stat"><div class="stat-l">Stock actual</div><div class="stat-v">${p.stock} un.</div></div>
+            <div class="stat"><div class="stat-l">Stock mínimo</div><div class="stat-v">${p.min} un.</div></div>
+            <div class="stat"><div class="stat-l">Stock máximo</div><div class="stat-v">${p.max} un.</div></div>
+          </div>
+          <div class="detail-block">
+            <h4>Nivel de stock</h4>
+            <div class="stock-meter-row">
+              <div class="meter"><div class="meter-fill ${st.key}" style="width:${fill}%"></div><div class="meter-min" style="left:${minLeft}%"></div></div>
+              <span class="stock-note">mín. ${p.min}</span>
+            </div>
+            <div class="replenish ${st.key}"><svg class="icon"><use href="#i-alert"/></svg><span>${note}</span></div>
+          </div>
+          <div class="detail-block">
+            <h4>Últimos movimientos</h4>
+            <table class="moves">
+              <thead><tr><th>Tipo</th><th>Cantidad</th><th>Fecha</th><th>Usuario</th></tr></thead>
+              <tbody>
+                <tr><td>Entrada</td><td class="qty in">+20</td><td>14/10/2026</td><td>María Sosa</td></tr>
+                <tr><td>Salida</td><td class="qty out">−5</td><td>12/10/2026</td><td>Lucas Pérez</td></tr>
+                <tr><td>Entrada</td><td class="qty in">+30</td><td>09/10/2026</td><td>María Sosa</td></tr>
+              </tbody>
+            </table>
+          </div>`
+      }
+
+      renderV4()
+      document.getElementById('v4-list').addEventListener('click', (event) => {
+        const item = event.target.closest('[data-index]')
+        if (!item) return
+        selected = Number(item.dataset.index)
+        renderV4()
+      })
+
+      /* ── E · Híbrida A + B ─────────────────────────────────────────── */
+      const v5Params = new URLSearchParams(window.location.search)
+      const v5StateParam = v5Params.get('estado')
+      let v5ActiveFilter = ['activos', 'inactivos', 'todos'].includes(v5StateParam)
+        ? v5StateParam
+        : 'activos'
+      const v5SortParam = v5Params.get('sort')
+      let v5Sort = ['recent', 'name', 'stock-desc', 'stock-asc', 'price-desc'].includes(v5SortParam)
+        ? v5SortParam
+        : 'recent'
+
+      const activeChip = (p) => p.activo === false
+        ? '<span class="status inactive"><i></i>Inactivo</span>'
+        : '<span class="status active"><i></i>Activo</span>'
+
+      const matchesActive = (p) =>
+        v5ActiveFilter === 'todos' ||
+        (v5ActiveFilter === 'activos' ? p.activo !== false : p.activo === false)
+
+      function sortV5(list) {
+        const copy = [...list]
+        const byName = (a, b) => a.name.localeCompare(b.name, 'es')
+        switch (v5Sort) {
+          case 'name':
+            return copy.sort(byName)
+          case 'stock-desc':
+            return copy.sort((a, b) => b.stock - a.stock || byName(a, b))
+          case 'stock-asc':
+            return copy.sort((a, b) => a.stock - b.stock || byName(a, b))
+          case 'price-desc':
+            return copy.sort((a, b) => b.price - a.price || byName(a, b))
+          default:
+            return copy
+        }
+      }
+
+      function renderV5() {
+        const visible = sortV5(PRODUCTS.filter(matchesActive))
+        const rows = visible.slice(0, 10)
+
+        document.getElementById('v5-body').innerHTML = rows.map((p) => {
+          const lvl = stockLevel(p)
+          return `
+          <tr>
+            <td><input class="check" type="checkbox" aria-label="Seleccionar ${p.name}" /></td>
+            <td><div class="prod-text"><div class="prod-name" title="${p.name}">${p.name}</div>${p.desc ? `<div class="prod-desc">${p.desc}</div>` : ''}</div></td>
+            <td class="col-sku"><span class="sku">${p.sku}</span></td>
+            <td class="col-cat"><span class="cat-plain ${p.cat ? '' : 'cat-empty'}" title="${p.cat || 'Sin categoría'}">${p.cat || 'Sin categoría'}</span></td>
+            <td class="num"><span class="price price-cost">${money(p.costo)}</span></td>
+            <td class="num"><span class="price">${money(p.price)}</span></td>
+            <td>
+              <div class="stock-block">
+                <div class="stock-line">${p.stock} un. <small>/ ${p.max}</small></div>
+                ${meterHtml(p, lvl)}
+                <div class="stock-note">mín. ${p.min} · <span class="stock-tag ${lvl.key}"><i></i>${lvl.label}</span></div>
+              </div>
+            </td>
+            <td>${activeChip(p)}</td>
+            <td><div class="row-actions">${tableActions(p)}</div></td>
+          </tr>`
+        }).join('')
+
+        document.getElementById('v5-mobile').innerHTML = visible.slice(0, 6).map((p) => {
+          const lvl = stockLevel(p)
+          return `
+          <article class="m-card">
+            <div class="m-card-top">
+              <div class="m-card-info"><div class="m-card-name">${p.name}</div><div class="m-card-sub">${p.sku} · ${p.cat || 'Sin categoría'}</div></div>
+              ${activeChip(p)}
+            </div>
+            <div class="m-card-mid">
+              <div><span class="m-price">${money(p.price)}</span><div class="m-cost">Costo ${money(p.costo)}</div></div>
+              <span class="m-stock">${p.stock} de ${p.max} un.</span>
+            </div>
+            ${meterHtml(p, lvl)}
+            <div class="m-stock-meta">mín. ${p.min} · <span class="stock-tag ${lvl.key}"><i></i>${lvl.label}</span></div>
+            <div class="m-card-foot">${rowActions(p)}</div>
+          </article>`
+        }).join('')
+
+        document.getElementById('v5-count').innerHTML =
+          `Mostrando <strong>${rows.length ? `1–${rows.length}` : '0'}</strong> de <strong>1.420</strong> productos`
+
+        document.getElementById('v5-active-filter').value = v5ActiveFilter
+        document.getElementById('v5-sort').value = v5Sort
+      }
+
+      renderV5()
+
+      document.getElementById('v5-active-filter').addEventListener('change', (event) => {
+        v5ActiveFilter = event.target.value
+        renderV5()
+      })
+
+      document.getElementById('v5-sort').addEventListener('change', (event) => {
+        v5Sort = event.target.value
+        renderV5()
+      })
+
+      /* ── Navegación entre propuestas ───────────────────────────────── */
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('clean') === '1') document.body.classList.add('clean')
+
+      function setVariant(variant) {
+        document.querySelectorAll('.variant').forEach((section) => {
+          section.classList.toggle('active', section.dataset.variant === variant)
+        })
+        document.querySelectorAll('[data-variant-btn]').forEach((button) => {
+          button.classList.toggle('active', button.dataset.variantBtn === variant)
+        })
+      }
+
+      setVariant(params.get('variant') || 'v5')
+
+      document.querySelectorAll('[data-variant-btn]').forEach((button) => {
+        button.addEventListener('click', () => {
+          setVariant(button.dataset.variantBtn)
+          window.scrollTo({ top: 0 })
+        })
+      })
+    </script>
+  </body>
+</html>

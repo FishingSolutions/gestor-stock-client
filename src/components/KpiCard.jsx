@@ -1,17 +1,17 @@
 // src/components/KpiCard.jsx
 const tones = {
-    blue: { icon: 'bg-blue-100 text-blue-600', badge: 'bg-blue-50 text-blue-700' },
-    amber: { icon: 'bg-amber-100 text-amber-600', badge: 'bg-amber-50 text-amber-700' },
-    red: { icon: 'bg-red-100 text-red-600', badge: 'bg-red-100 text-red-700' },
-    green: { icon: 'bg-green-100 text-green-600', badge: 'bg-green-100 text-green-700' },
+    blue: { icon: 'bg-cream-200 text-rust-600', badge: 'bg-cream-100 text-rust-700' },
+    amber: { icon: 'bg-stock-amber-bg text-stock-amber', badge: 'bg-stock-amber-bg text-stock-amber' },
+    red: { icon: 'bg-stock-red-bg text-wine-600', badge: 'bg-stock-red-bg text-wine-600' },
+    green: { icon: 'bg-stock-green-bg text-stock-green', badge: 'bg-stock-green-bg text-stock-green' },
 }
 
 export default function KpiCard({ title, value, unit, icon, badge, tone = 'blue' }) {
     const t = tones[tone]
     return (
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-lg bg-white p-5">
             <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <span className="text-xs font-semibold uppercase tracking-wide text-brown-500">
                     {title}
                 </span>
                 <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${t.icon}`}>
@@ -19,12 +19,12 @@ export default function KpiCard({ title, value, unit, icon, badge, tone = 'blue'
                 </span>
             </div>
 
-            <p className="mt-3 text-3xl font-bold text-slate-900">
-                {value} <span className="text-sm font-normal text-slate-500">{unit}</span>
+            <p className="mt-3 text-3xl font-bold text-brown-900">
+                {value} <span className="text-sm font-normal text-brown-500">{unit}</span>
             </p>
 
             {badge && (
-                <span className={`mt-3 inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${t.badge}`}>
+                <span className={`mt-3 inline-block rounded px-2.5 py-0.5 text-xs font-medium ${t.badge}`}>
                     {badge}
                 </span>
             )}
