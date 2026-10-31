@@ -1,4 +1,4 @@
-import Sidebar from '../components/Sidebar'
+import AppShell from '../components/layout/AppShell/AppShell'
 import KpiCard from '../components/KpiCard'
 import { Archive, Layers, TriangleAlert, CircleAlert } from 'lucide-react'
 
@@ -11,16 +11,15 @@ const kpis = [
 
 const HomePage = () => {
     return (
-        <div className="flex bg-[#F8F9FF] min-h-screen">
-            <Sidebar />
-            <main className="flex-1 p-6">
+        <AppShell>
+            <div className="p-6">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
                     {kpis.map((k) => (
                         <KpiCard key={k.title} {...k} />
                     ))}
                 </div>
-            </main>
-        </div>
+            </div>
+        </AppShell>
     )
 }
 
