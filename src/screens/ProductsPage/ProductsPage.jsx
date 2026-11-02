@@ -8,6 +8,7 @@ import ProductsFooter from '../../components/products/ProductsFooter/ProductsFoo
 import ProductsEmptyState from '../../components/products/ProductsEmptyState/ProductsEmptyState'
 import ProductsErrorState from '../../components/products/ProductsErrorState/ProductsErrorState'
 import ProductsLoading from '../../components/products/ProductsLoading/ProductsLoading'
+import ProductDrawer from '../../components/products/ProductDrawer/ProductDrawer'
 import KpiCards from '../../components/kpis/KpiCards/KpiCards'
 import { useProducts } from '../../features/products/hooks/useProducts'
 import { buildInventoryKpis } from '../../features/products/utils/kpis'
@@ -22,13 +23,25 @@ export default function ProductsPage() {
  const [sort, setSort] = useState('recent')
  const [page, setPage] = useState(1)
  const [pageSize, setPageSize] = useState(10)
+ const [drawerOpen, setDrawerOpen] = useState(false)
+
+ const categoryOptions = useMemo(() => {
+  const byId = new Map()
+
+  products.forEach((product) => {
+   if (product.idCategoria) {
+    byId.set(product.idCategoria, product.categoria)
+   }
+  })
+
+  return [...byId.entries()]
+   .map(([value, label]) => ({ value, label }))
+   .sort((a, b) => a.label.localeCompare(b.label, 'es'))
+ }, [products])
 
  const categories = useMemo(
-  () =>
-   [...new Set(products.map((product) => product.categoria).filter(Boolean))].sort(
-    (a, b) => a.localeCompare(b, 'es'),
-   ),
-  [products],
+  () => categoryOptions.map((option) => option.label),
+  [categoryOptions],
  )
 
  const filtered = useMemo(() => {
@@ -116,6 +129,7 @@ export default function ProductsPage() {
       </button>
       <button
        type="button"
+       onClick={() => setDrawerOpen(true)}
        className="flex flex-1 items-center justify-center gap-2 rounded bg-rust-600 px-3.5 py-2 text-[12.5px] font-semibold text-cream-50 transition-colors hover:bg-rust-700 min-[900px]:flex-none"
       >
        <Plus size={16} />
@@ -196,6 +210,14 @@ export default function ProductsPage() {
      </>
     )}
    </div>
+
+   {drawerOpen && (
+    <ProductDrawer
+     categories={categoryOptions}
+     onClose={() => setDrawerOpen(false)}
+     onCreated={reload}
+    />
+   )}
   </AppShell>
  )
 }

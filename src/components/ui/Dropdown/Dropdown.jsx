@@ -10,6 +10,7 @@ export default function Dropdown({
   placeholder = 'Seleccionar',
   className = '',
   panelClassName = '',
+  buttonClassName = '',
   align = 'left',
 }) {
   const [open, setOpen] = useState(false)
@@ -81,6 +82,7 @@ export default function Dropdown({
     } else if (event.key === 'Escape') {
       if (!open) return
       event.preventDefault()
+      event.stopPropagation()
       closeMenu(true)
     } else if (event.key === 'Tab') {
       if (open) setOpen(false)
@@ -99,7 +101,7 @@ export default function Dropdown({
         aria-label={label}
         onClick={() => (open ? closeMenu() : openMenu())}
         onKeyDown={handleKeyDown}
-        className="flex h-9 w-full items-center gap-2 rounded bg-cream-50 px-3 text-left text-[12px] font-medium text-brown-700 outline-none transition-colors hover:bg-cream-100 focus-visible:ring-2 focus-visible:ring-rust-500/30 aria-expanded:bg-white"
+        className={`flex h-9 w-full items-center gap-2 rounded bg-cream-50 px-3 text-left text-[12px] font-medium text-brown-700 outline-none transition-colors hover:bg-cream-100 focus-visible:ring-2 focus-visible:ring-rust-500/30 aria-expanded:bg-white ${buttonClassName}`}
       >
         {icon && <span className="shrink-0 text-brown-500">{icon}</span>}
         <span className="grid min-w-0 flex-1 overflow-hidden text-left">

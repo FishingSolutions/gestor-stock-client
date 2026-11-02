@@ -46,6 +46,7 @@ export async function fetchProducts() {
     codigo: row.codigo,
     nombre: row.nombre,
     descripcion: row.descripcion,
+    idCategoria: row.id_categoria,
     categoria:
       categoriesById.get(row.id_categoria) || 'Sin categoría',
     precioCosto: Number(row.precio_costo) || 0,
@@ -55,4 +56,37 @@ export async function fetchProducts() {
     stockMaximo: Number(row.stock_maximo) || 0,
     activo: row.activo !== false,
   }))
+}
+
+export async function createProduct({
+  codigo,
+  nombre,
+  descripcion,
+  precioCosto,
+  precioVenta,
+  stockActual,
+  stockMinimo,
+  stockMaximo,
+  activo,
+  idCategoria,
+}) {
+  const { data, error } = await supabase
+    .from('producto')
+    .insert({
+      codigo: codigo.trim(),
+      nombre: nombre.trim(),
+      descripcion: descripcion.trim(),
+      precio_costo: Number(precioCosto) || 0,
+      precio_venta: Number(precioVenta) || 0,
+      stock_actual: Number(stockActual) || 0,
+      stock_minimo: Number(stockMinimo) || 0,
+      stock_maximo: Number(stockMaximo) || 0,
+      activo: activo === 'activo',
+      id_categoria: idCategoria,
+    })
+    .select('id_producto')
+    .single()
+
+  if (error) throw error
+  return data
 }
