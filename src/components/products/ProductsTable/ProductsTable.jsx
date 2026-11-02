@@ -15,7 +15,7 @@ const COLUMNS = [
 export default function ProductsTable({ products, footer }) {
   return (
     <div className="hidden min-h-0 flex-1 flex-col overflow-hidden rounded-lg bg-white min-[1281px]:flex">
-      <div className="min-h-0 flex-1 overflow-auto">
+      <div className="min-h-0 flex-1 overflow-auto scrollbar-custom">
         <table className="w-full table-fixed border-collapse">
           <colgroup>
             {COLUMNS.map((column) => (

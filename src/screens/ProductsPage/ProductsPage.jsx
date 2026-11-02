@@ -8,10 +8,13 @@ import ProductsFooter from '../../components/products/ProductsFooter/ProductsFoo
 import ProductsEmptyState from '../../components/products/ProductsEmptyState/ProductsEmptyState'
 import ProductsErrorState from '../../components/products/ProductsErrorState/ProductsErrorState'
 import ProductsLoading from '../../components/products/ProductsLoading/ProductsLoading'
+import KpiCards from '../../components/kpis/KpiCards/KpiCards'
 import { useProducts } from '../../features/products/hooks/useProducts'
+import { buildInventoryKpis } from '../../features/products/utils/kpis'
 
 export default function ProductsPage() {
  const { products, loading, error, reload } = useProducts()
+ const kpis = useMemo(() => buildInventoryKpis(products), [products])
 
  const [search, setSearch] = useState('')
  const [category, setCategory] = useState('all')
@@ -98,17 +101,9 @@ export default function ProductsPage() {
     <header className="flex shrink-0 flex-col gap-3 min-[900px]:flex-row min-[900px]:items-start min-[900px]:justify-between">
      <div>
       <p className="text-[11px] font-semibold text-rust-600">Inventario / Productos</p>
-      <div className="mt-1 flex items-center gap-2">
-       <h1 className="text-2xl font-bold tracking-tight text-rust-600">
-        Productos
-       </h1>
-       <span className="rounded bg-cream-200 px-2 py-0.5 text-[11px] font-semibold text-brown-600">
-        {loading ? '…' : products.length}
-       </span>
-      </div>
-      <p className="mt-1 text-[12.5px] text-brown-600">
-       Tabla limpia con nivel de stock para priorizar reposiciones.
-      </p>
+      <h1 className="mt-1 text-2xl font-bold tracking-tight text-rust-600">
+       Productos
+      </h1>
      </div>
 
      <div className="flex gap-2">
@@ -130,15 +125,15 @@ export default function ProductsPage() {
     </header>
 
     {loading ? (
-     <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto">
+     <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto scrollbar-custom">
       <ProductsLoading />
      </div>
     ) : error ? (
-     <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto">
+     <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto scrollbar-custom">
       <ProductsErrorState error={error} onRetry={reload} />
      </div>
     ) : products.length === 0 ? (
-     <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto">
+     <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto scrollbar-custom">
       <ProductsEmptyState
        title="Todavía no hay productos"
        description="Cuando cargues el primero, va a aparecer en esta tabla."
@@ -146,6 +141,10 @@ export default function ProductsPage() {
      </div>
     ) : (
      <>
+      <div className="mt-5 shrink-0">
+       <KpiCards items={kpis} />
+      </div>
+
       <div className="mt-4 shrink-0">
        <ProductsToolbar
         search={search}
@@ -173,7 +172,7 @@ export default function ProductsPage() {
       </div>
 
       {total === 0 ? (
-       <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto">
+       <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto scrollbar-custom">
         <ProductsEmptyState
          actionLabel="Limpiar filtros"
          onAction={clearFilters}

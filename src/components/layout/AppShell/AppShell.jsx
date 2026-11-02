@@ -16,7 +16,7 @@ export default function AppShell({ children }) {
   return (
     <div className="flex h-dvh overflow-hidden">
       <div className="hidden h-full shrink-0 min-[900px]:block">
-        <Sidebar className="h-full overflow-y-auto" />
+        <Sidebar className="h-full overflow-y-auto scrollbar-custom" />
       </div>
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-canvas">
@@ -54,7 +54,7 @@ export default function AppShell({ children }) {
             className="absolute inset-0 bg-espresso/50"
           />
           <div className="absolute inset-y-0 left-0 w-[260px] bg-espresso">
-            <Sidebar className="h-full overflow-y-auto" onNavigate={closeMenu} />
+            <Sidebar className="h-full overflow-y-auto scrollbar-custom" onNavigate={closeMenu} />
             <button
               type="button"
               onClick={closeMenu}

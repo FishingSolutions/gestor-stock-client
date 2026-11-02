@@ -1,26 +1,20 @@
+import { useMemo } from 'react'
 import AppShell from '../components/layout/AppShell/AppShell'
-import KpiCard from '../components/KpiCard'
-import { Archive, Layers, TriangleAlert, CircleAlert } from 'lucide-react'
-
-const kpis = [
-    { title: 'Total de productos', value: '1,420', unit: 'SKUs activos', badge: '+12 nuevos este mes', tone: 'green', icon: <Archive size={18} /> },
-    { title: 'Unidades en stock', value: '48,290', unit: 'unidades', badge: 'Valoración: $384,150 USD', tone: 'blue', icon: <Layers size={18} /> },
-    { title: 'Stock bajo', value: '6', unit: 'artículos', badge: 'Requiere reposición', tone: 'amber', icon: <TriangleAlert size={18} /> },
-    { title: 'Sin stock', value: '2', unit: 'artículos', badge: 'Atención urgente', tone: 'red', icon: <CircleAlert size={18} /> },
-]
+import KpiCards from '../components/kpis/KpiCards/KpiCards'
+import { useProducts } from '../features/products/hooks/useProducts'
+import { buildInventoryKpis } from '../features/products/utils/kpis'
 
 const HomePage = () => {
-    return (
-        <AppShell>
-            <div className="p-6">
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    {kpis.map((k) => (
-                        <KpiCard key={k.title} {...k} />
-                    ))}
-                </div>
-            </div>
-        </AppShell>
-    )
+  const { products, loading, error } = useProducts()
+  const kpis = useMemo(() => buildInventoryKpis(products), [products])
+
+  return (
+    <AppShell>
+      <div className="p-6">
+        <KpiCards items={kpis} pending={loading || Boolean(error)} />
+      </div>
+    </AppShell>
+  )
 }
 
 export default HomePage

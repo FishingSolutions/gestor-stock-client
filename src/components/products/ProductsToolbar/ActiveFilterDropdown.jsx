@@ -1,23 +1,19 @@
-import { ChevronDown } from 'lucide-react'
-import { selectClassName } from './selectStyles'
+import Dropdown from '../../ui/Dropdown/Dropdown'
+
+const OPTIONS = [
+ { value: 'activos', label: 'Activos' },
+ { value: 'inactivos', label: 'Inactivos' },
+ { value: 'todos', label: 'Ambos' },
+]
 
 export default function ActiveFilterDropdown({ value, onChange, className = '' }) {
  return (
-  <div className={`relative ${className}`}>
-   <select
-    aria-label="Filtrar por estado"
-    value={value}
-    onChange={(event) => onChange(event.target.value)}
-    className={`${selectClassName} pr-9`}
-   >
-    <option value="activos">Activos</option>
-    <option value="inactivos">Inactivos</option>
-    <option value="todos">Ambos</option>
-   </select>
-   <ChevronDown
-    size={15}
-    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-brown-500"
-   />
-  </div>
+  <Dropdown
+   label="Filtrar por estado"
+   value={value}
+   onChange={onChange}
+   options={OPTIONS}
+   className={className}
+  />
  )
 }
