@@ -10,7 +10,11 @@ const ICONS = {
 
 export default function KpiCards({ items, pending = false, className = '' }) {
   return (
-    <div className={`grid grid-cols-2 gap-3 xl:grid-cols-4 ${className}`}>
+    <div
+      aria-busy={pending || undefined}
+      className={`grid grid-cols-2 gap-3 xl:grid-cols-4 ${className}`}
+    >
+      {pending && <span className="sr-only">Cargando indicadores...</span>}
       {items.map(({ key, ...item }) => {
         const Icon = ICONS[key]
 

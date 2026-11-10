@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Menu, Package, X } from 'lucide-react'
+import { Outlet } from 'react-router-dom'
 import Sidebar from '../../Sidebar/Sidebar'
 import { useAuth } from '../../../context/AuthContext'
 
@@ -7,16 +8,26 @@ function getInitials(user) {
   return (user?.email?.[0] ?? 'U').toUpperCase()
 }
 
-export default function AppShell({ children }) {
+/**
+ * Layout de la app (se usa como layout route: las páginas se renderizan
+ * dentro de <Outlet />). Al persistir entre navegaciones, la sidebar no se
+ * desmonta y el :hover sobrevive a los cambios de sección.
+ */
+export default function AppShell() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { user } = useAuth()
 
   const closeMenu = () => setMenuOpen(false)
 
   return (
-    <div className="flex h-dvh overflow-hidden">
-      <div className="hidden h-full shrink-0 min-[900px]:block">
-        <Sidebar className="h-full overflow-y-auto scrollbar-custom" />
+    <div className="flex h-full overflow-hidden">
+      {/* Rail colapsado: el contenedor fija el ancho real (w-16) para que el
+          contenido principal nunca se mueva; la sidebar expandida flota encima. */}
+      <div className="relative hidden w-16 shrink-0 min-[900px]:block">
+        <Sidebar
+          variant="rail"
+          className="absolute inset-y-0 left-0 z-30"
+        />
       </div>
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-canvas">
@@ -42,7 +53,9 @@ export default function AppShell({ children }) {
           </span>
         </header>
 
-        <main className="flex min-h-0 flex-1 flex-col overflow-hidden">{children}</main>
+        <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          <Outlet />
+        </main>
       </div>
 
       {menuOpen && (
@@ -54,7 +67,7 @@ export default function AppShell({ children }) {
             className="absolute inset-0 bg-espresso/50"
           />
           <div className="absolute inset-y-0 left-0 w-[260px] bg-espresso">
-            <Sidebar className="h-full overflow-y-auto scrollbar-custom" onNavigate={closeMenu} />
+            <Sidebar variant="full" className="h-full" onNavigate={closeMenu} />
             <button
               type="button"
               onClick={closeMenu}

@@ -5,6 +5,10 @@ const tones = {
   green: { icon: 'bg-stock-green-bg text-stock-green', badge: 'bg-stock-green-bg text-stock-green' },
 }
 
+// Bloques de skeleton (mismo lenguaje visual que ProductsLoading).
+const skeletonValueClassName = 'mt-2 block h-6 w-20 animate-pulse rounded bg-cream-200 sm:h-7'
+const skeletonBadgeClassName = 'mt-2 hidden h-4 w-28 animate-pulse rounded bg-cream-100 sm:inline-block'
+
 export default function KpiCard({
   title,
   value,
@@ -29,19 +33,27 @@ export default function KpiCard({
         </span>
       </div>
 
-      <p className="mt-1.5 text-[22px] font-bold leading-tight tabular-nums text-brown-900 sm:text-2xl">
-        {pending ? '—' : value}{' '}
-        {unit && (
-          <span className="text-[11px] font-normal text-brown-500 sm:text-xs">{unit}</span>
-        )}
-      </p>
+      {pending ? (
+        <span className={skeletonValueClassName} />
+      ) : (
+        <p className="mt-1.5 text-[22px] font-bold leading-tight tabular-nums text-brown-900 sm:text-2xl">
+          {value}{' '}
+          {unit && (
+            <span className="text-[11px] font-normal text-brown-500 sm:text-xs">{unit}</span>
+          )}
+        </p>
+      )}
 
-      {badge && !pending && (
-        <span
-          className={`mt-2 hidden rounded px-2 py-0.5 text-[10.5px] font-medium sm:inline-block ${t.badge}`}
-        >
-          {badge}
-        </span>
+      {pending ? (
+        <span className={skeletonBadgeClassName} />
+      ) : (
+        badge && (
+          <span
+            className={`mt-2 hidden rounded px-2 py-0.5 text-[10.5px] font-medium sm:inline-block ${t.badge}`}
+          >
+            {badge}
+          </span>
+        )
       )}
     </div>
   )

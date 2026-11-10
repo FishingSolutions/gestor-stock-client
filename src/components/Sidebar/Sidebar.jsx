@@ -1,122 +1,84 @@
-import { BarChart3, FolderTree, Home, LogOut, Package, Tag } from 'lucide-react'
-import { NavLink } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext'
+import { Package } from 'lucide-react'
+import { cx } from '../../lib/cx'
+import { sidebarSections } from './sidebarSections'
+import SidebarItem from './SidebarItem'
+import SidebarUser from './SidebarUser'
 
-const sections = [
-  {
-    title: 'Principal',
-    items: [{ icon: Home, label: 'Inicio', to: '/', end: true }],
-  },
-  {
-    title: 'Inventario',
-    items: [
-      { icon: Package, label: 'Productos', to: '/productos' },
-      { icon: Tag, label: 'Movimientos' },
-      { icon: FolderTree, label: 'Categorías' },
-      { icon: FolderTree, label: 'Stock bajo' },
-    ],
-  },
-  {
-    title: 'Sistema',
-    items: [{ icon: BarChart3, label: 'Configuración' }],
-  },
-]
+/**
+ * Ancho del "rail" colapsado (w-16 = 64px) y del panel expandido.
+ * El cálculo del rail es intencional: p-2 del aside + px-1.5 del ítem + slot
+ * de ícono w-9 (36px) dejan el ícono perfectamente centrado en los 64px.
+ */
+const variantClassName = {
+  // Colapsada: se expande al hacer hover o al navegar con teclado (focus-within).
+  // Flota sobre el contenido (el ancho real lo fija el contenedor en AppShell),
+  // así el resto de la app nunca "salta" durante la transición.
+  rail: 'w-16 transition-[width,box-shadow] duration-200 ease-out hover:w-[260px] hover:shadow-xl focus-within:w-[260px] focus-within:shadow-xl',
+  // Siempre expandida (drawer móvil).
+  full: 'w-[260px]',
+}
 
-const baseItemClassName =
-  'flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm transition-colors'
-const inactiveItemClassName = `${baseItemClassName} text-cream-100 hover:bg-white/5`
-const activeItemClassName = `${baseItemClassName} bg-rust-600 font-semibold text-cream-50`
+/**
+ * @param {object}  props
+ * @param {'rail' | 'full'} [props.variant='rail'] rail = colapsada con íconos y
+ *        se expande con hover; full = siempre expandida (drawer móvil).
+ * @param {string}  [props.className]
+ * @param {Function} [props.onNavigate] Se ejecuta al navegar (cierra el drawer móvil).
+ */
+export default function Sidebar({ className = '', variant = 'rail', onNavigate }) {
+  const showLabels = variant === 'full'
 
-export default function Sidebar({ className = '', onNavigate }) {
-  const { user, profile, signOut } = useAuth()
+  // Patrón compartido: con la sidebar colapsada los textos se desvanecen y
+  // reaparecen al hacer hover; con variant="full" siempre son visibles.
+  const labelVisibilityClassName = showLabels
+    ? 'opacity-100'
+    : 'opacity-0 group-hover/sidebar:opacity-100'
 
-  const displayName =
-    [profile?.nombre, profile?.apellido].filter(Boolean).join(' ') ||
-    user?.email ||
-    'Usuario'
-
-  const initials =
-    `${profile?.nombre?.[0] ?? ''}${profile?.apellido?.[0] ?? ''}`.toUpperCase() ||
-    (user?.email?.[0] ?? 'U').toUpperCase()
-
-  const handleSignOut = async () => {
-    try {
-      await signOut()
-    } catch {
-      // La sesión local se limpia igual y ProtectedRoute redirige al login.
-    }
-  }
+  const sectionTitleClassName = cx(
+    'mb-2 px-1.5 text-xs uppercase tracking-wider text-cream-300/70 transition-opacity duration-200',
+    labelVisibilityClassName,
+  )
 
   return (
     <aside
-      className={`flex w-[260px] min-h-screen flex-col bg-espresso p-4 text-cream-100 ${className}`}
+      className={cx(
+        'group/sidebar flex h-full flex-col overflow-hidden bg-espresso p-2 text-cream-100',
+        variantClassName[variant] ?? variantClassName.full,
+        className,
+      )}
     >
-      <h2 className="mb-6 flex items-center gap-2 text-xl font-bold text-cream-50">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-rust-600 text-cream-50">
-          <Package size={18} />
+      <h2 className="mb-6 flex items-center gap-2 px-1.5 text-xl font-bold text-cream-50">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-rust-600 text-cream-50">
+            <Package size={18} />
+          </span>
         </span>
-        StockFX
+        <span
+          className={cx(
+            'whitespace-nowrap transition-opacity duration-200',
+            labelVisibilityClassName,
+          )}
+        >
+          StockFX
+        </span>
       </h2>
 
-      <nav className="flex-1 space-y-6">
-        {sections.map((section) => (
+      <nav className="flex-1 space-y-6 overflow-y-auto overflow-x-hidden scrollbar-custom">
+        {sidebarSections.map((section) => (
           <div key={section.title}>
-            <h3 className="mb-2 text-xs uppercase tracking-wider text-cream-300/70">
-              {section.title}
-            </h3>
+            <h3 className={sectionTitleClassName}>{section.title}</h3>
             <ul className="space-y-1">
-              {section.items.map((item) => {
-                const Icon = item.icon
-
-                return (
-                  <li key={item.label}>
-                    {item.to ? (
-                      <NavLink
-                        to={item.to}
-                        end={Boolean(item.end)}
-                        onClick={onNavigate}
-                        className={({ isActive }) =>
-                          isActive ? activeItemClassName : inactiveItemClassName
-                        }
-                      >
-                        <Icon size={16} />
-                        <span>{item.label}</span>
-                      </NavLink>
-                    ) : (
-                      <button type="button" className={inactiveItemClassName}>
-                        <Icon size={16} />
-                        <span>{item.label}</span>
-                      </button>
-                    )}
-                  </li>
-                )
-              })}
+              {section.items.map((item) => (
+                <li key={item.label}>
+                  <SidebarItem {...item} showLabels={showLabels} onNavigate={onNavigate} />
+                </li>
+              ))}
             </ul>
           </div>
         ))}
       </nav>
 
-      <div className="mt-6 pt-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-cream-200 text-sm font-semibold text-brown-900">
-            {initials}
-          </div>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-cream-50">{displayName}</p>
-            {profile?.rol && (
-              <p className="truncate text-xs text-cream-300/70">{profile.rol}</p>
-            )}
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={handleSignOut}
-          className="mt-3 flex w-full items-center gap-2 rounded px-2 py-1.5 text-left text-sm text-cream-300/80 transition-colors hover:bg-white/5 hover:text-cream-50"
-        >
-          <LogOut size={16} />
-          <span>Cerrar sesión</span>
-        </button>
-      </div>
+      <SidebarUser showLabels={showLabels} />
     </aside>
   )
 }

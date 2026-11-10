@@ -73,6 +73,15 @@
 }
 
 @layer base {
+  /* Cadena de altura del app-shell: el documento mide exactamente el viewport,
+     así el layout general nunca scrollea; el scroll vive dentro de cada región
+     (tabla de productos, nav de la sidebar, cards, drawer, dropdowns). */
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
   input[type='number'] {
     -moz-appearance: textfield;
     appearance: textfield;
