@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Download, Plus } from 'lucide-react'
 import ProductsToolbar from '../../components/products/ProductsToolbar/ProductsToolbar'
 import ProductsTable from '../../components/products/ProductsTable/ProductsTable'
@@ -7,11 +8,22 @@ import ProductsFooter from '../../components/products/ProductsFooter/ProductsFoo
 import ProductsEmptyState from '../../components/products/ProductsEmptyState/ProductsEmptyState'
 import ProductsLoading from '../../components/products/ProductsLoading/ProductsLoading'
 import ProductDrawer from '../../components/products/ProductDrawer/ProductDrawer'
+import ProductDetailDrawer from '../../components/products/ProductDetailDrawer/ProductDetailDrawer'
+import ConfirmDialog from '../../components/ui/ConfirmDialog/ConfirmDialog'
 import ErrorState from '../../components/ui/ErrorState/ErrorState'
+import { deleteProduct } from '../../features/products/services/productsService'
 import { useProducts } from '../../features/products/hooks/useProducts'
+import { useAuth } from '../../context/AuthContext'
 
 export default function ProductsPage() {
+ const navigate = useNavigate()
  const { products, loading, error, reload } = useProducts()
+ const { profile } = useAuth()
+ // El rol es un string (por ahora solo existe ADMINISTRADOR). Ese rol habilita
+ // editar, cambiar stock, eliminar y crear productos.
+ const isAdmin = profile?.rol?.toLowerCase() === 'administrador'
+ const [deleteTarget, setDeleteTarget] = useState(null)
+ const [deleting, setDeleting] = useState(false)
 
  const [search, setSearch] = useState('')
  const [category, setCategory] = useState('all')
@@ -20,6 +32,7 @@ export default function ProductsPage() {
  const [page, setPage] = useState(1)
  const [pageSize, setPageSize] = useState(10)
  const [drawerOpen, setDrawerOpen] = useState(false)
+ const [detail, setDetail] = useState(null)
 
  const categoryOptions = useMemo(() => {
   const byId = new Map()
@@ -123,14 +136,16 @@ export default function ProductsPage() {
        <Download size={16} />
        Exportar
       </button>
-      <button
-       type="button"
-       onClick={() => setDrawerOpen(true)}
-       className="flex flex-1 items-center justify-center gap-2 rounded bg-rust-600 px-3.5 py-2 text-[12.5px] font-semibold text-cream-50 transition-colors hover:bg-rust-700 min-[900px]:flex-none"
-      >
-       <Plus size={16} />
-       Nuevo producto
-      </button>
+      {isAdmin && (
+       <button
+        type="button"
+        onClick={() => setDrawerOpen(true)}
+        className="flex flex-1 items-center justify-center gap-2 rounded bg-rust-600 px-3.5 py-2 text-[12.5px] font-semibold text-cream-50 transition-colors hover:bg-rust-700 min-[900px]:flex-none"
+       >
+        <Plus size={16} />
+        Nuevo producto
+       </button>
+      )}
      </div>
     </header>
 
@@ -193,6 +208,11 @@ export default function ProductsPage() {
         <div className="mt-3 hidden min-h-0 flex-1 flex-col min-[1281px]:flex">
          <ProductsTable
           products={pageItems}
+          canManageProducts={isAdmin}
+          onViewProduct={(product, mode) => setDetail({ product, mode })}
+          onEditProduct={(product, mode) => setDetail({ product, mode })}
+          onMovementsProduct={() => navigate('/movimientos')}
+          onDeleteProduct={(product) => setDeleteTarget(product)}
           footer={<ProductsFooter variant="desktop" {...footerProps} />}
          />
         </div>
@@ -214,6 +234,48 @@ export default function ProductsPage() {
      onCreated={reload}
     />
    )}
+
+   {detail && (
+    <ProductDetailDrawer
+     product={detail.product}
+     initialMode={detail.mode}
+     canManage={isAdmin}
+     categories={categoryOptions}
+     onClose={() => setDetail(null)}
+     onUpdated={reload}
+     onDeleted={reload}
+    />
+   )}
+
+   <ConfirmDialog
+    open={Boolean(deleteTarget)}
+    title="¿Eliminar este producto?"
+    message={
+     deleteTarget ? (
+      <>
+       Vas a eliminar <b>{deleteTarget.nombre}</b> ({deleteTarget.codigo}).
+       Esta acción no se puede deshacer.
+      </>
+     ) : null
+    }
+    confirmLabel="Sí, eliminar"
+    busy={deleting}
+    onCancel={() => setDeleteTarget(null)}
+    onConfirm={async () => {
+     if (deleting || !deleteTarget) return
+     setDeleting(true)
+     try {
+      await deleteProduct(deleteTarget.id)
+      setDeleteTarget(null)
+      reload()
+     } catch {
+      setDeleteTarget(null)
+      reload()
+     } finally {
+      setDeleting(false)
+     }
+    }}
+   />
   </>
  )
 }

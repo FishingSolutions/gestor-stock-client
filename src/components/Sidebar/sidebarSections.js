@@ -14,7 +14,7 @@ export const sidebarSections = [
     title: 'Inventario',
     items: [
       { icon: Package, label: 'Productos', to: '/productos' },
-      { icon: Tag, label: 'Movimientos' },
+      { icon: Tag, label: 'Movimientos', to: '/movimientos' },
       { icon: FolderTree, label: 'Categorías' },
       { icon: FolderTree, label: 'Stock bajo' },
     ],

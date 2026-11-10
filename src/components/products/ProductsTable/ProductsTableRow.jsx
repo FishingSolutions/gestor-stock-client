@@ -5,7 +5,7 @@ import ProductActions from '../ProductActions/ProductActions'
 import StockMeter from '../StockMeter/StockMeter'
 import StockTag from '../StockTag/StockTag'
 
-export default function ProductsTableRow({ product }) {
+export default function ProductsTableRow({ product, canManage, onView, onEdit, onMovements, onDelete }) {
   const level = getStockLevel(product)
 
   return (
@@ -75,7 +75,14 @@ export default function ProductsTableRow({ product }) {
         <ActiveBadge activo={product.activo} />
       </td>
       <td className="px-3 py-2.5">
-        <ProductActions productName={product.nombre} />
+        <ProductActions
+          productName={product.nombre}
+          canManage={canManage}
+          onView={onView}
+          onEdit={onEdit}
+          onMovements={onMovements}
+          onDelete={onDelete}
+        />
       </td>
     </tr>
   )

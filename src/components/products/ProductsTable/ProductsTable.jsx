@@ -12,7 +12,15 @@ const COLUMNS = [
   { label: 'Acciones', width: '9%', align: 'right' },
 ]
 
-export default function ProductsTable({ products, footer }) {
+export default function ProductsTable({
+  products,
+  footer,
+  canManageProducts = false,
+  onViewProduct,
+  onEditProduct,
+  onMovementsProduct,
+  onDeleteProduct,
+}) {
   return (
     <div className="hidden min-h-0 flex-1 flex-col overflow-hidden rounded-lg bg-white min-[1281px]:flex">
       <div className="min-h-0 flex-1 overflow-auto scrollbar-custom">
@@ -46,7 +54,15 @@ export default function ProductsTable({ products, footer }) {
           </thead>
           <tbody>
             {products.map((product) => (
-              <ProductsTableRow key={product.id} product={product} />
+              <ProductsTableRow
+                key={product.id}
+                product={product}
+                canManage={canManageProducts}
+                onView={() => onViewProduct?.(product, 'view')}
+                onEdit={() => onEditProduct?.(product, 'edit')}
+                onMovements={() => onMovementsProduct?.(product)}
+                onDelete={() => onDeleteProduct?.(product)}
+              />
             ))}
           </tbody>
         </table>

@@ -4,6 +4,7 @@ import AppShell from '../components/layout/AppShell/AppShell'
 import HomePage from '../screens/HomePage'
 import LoginPage from '../screens/LoginPage'
 import ProductsPage from '../screens/ProductsPage/ProductsPage'
+import MovimientosPage from '../screens/MovimientosPage/MovimientosPage'
 
 function AppRoutes() {
   return (
@@ -14,6 +15,7 @@ function AppRoutes() {
         <Route element={<AppShell />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/productos" element={<ProductsPage />} />
+          <Route path="/movimientos" element={<MovimientosPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
