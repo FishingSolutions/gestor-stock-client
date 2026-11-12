@@ -121,7 +121,7 @@ export async function updateProduct(
     precio_venta: Number(precioVenta) || 0,
     stock_minimo: Number(stockMinimo) || 0,
     stock_maximo: Number(stockMaximo) || 0,
-    activo: Boolean(activo),
+    activo: activo === true || activo === 'activo',
     id_categoria: idCategoria || null,
   }
 
