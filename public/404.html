@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>gestor-stock-client</title>
+    <script>
+      // GitHub Pages solo sirve index.html en la raíz del sitio; cualquier
+      // otra ruta (ej. /gestor-stock-client/productos refrescada) cae acá.
+      // Guardamos la ruta pedida y volvemos al index, donde main.jsx la
+      // restaura y el router entra directo a la sección.
+      (function () {
+        var BASE = '/gestor-stock-client'
+        var path = location.pathname
+
+        // Dejamos la ruta relativa al base: /productos, /movimientos, etc.
+        var route = path.indexOf(BASE) === 0 ? path.slice(BASE.length) : path
+        if (route.charAt(0) !== '/') route = '/' + route
+
+        try {
+          sessionStorage.setItem(
+            'stockfx:spa-redirect',
+            route + location.search + location.hash,
+          )
+        } catch (error) {
+          // Sin sessionStorage disponible: al menos volvemos al inicio de la app.
+        }
+
+        location.replace(BASE + '/')
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>
