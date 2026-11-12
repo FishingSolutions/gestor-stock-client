@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Modo oscuro por clase: la aplica <ThemeProvider> sobre <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-canvas: #f7f6f4;
   --color-alabaster: #faf7f4;
@@ -73,6 +76,55 @@
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  /* Tema oscuro: se redefinen los tokens de la paleta. Como los utilities de
+     Tailwind v4 usan var(--color-*), toda la app cambia sin duplicar clases.
+     Los tokens mantienen su rol: cream-* = superficies/controles (excepto
+     cream-50, que es texto sobre acentos y sidebar); brown-* = texto. */
+  .dark {
+    color-scheme: dark;
+
+    /* Superficies */
+    --color-canvas: #12100d;
+    --color-alabaster: #181411;
+    --color-white: #201a16;
+    --color-espresso: #0c0907;
+    --color-espresso-light: #1a1410;
+
+    /* Controles y bordes */
+    --color-cream-100: #2b231e;
+    --color-cream-200: #3a2f28;
+    --color-cream-300: #a08b7a;
+    --color-cream-400: #7d6b5e;
+
+    /* Texto */
+    --color-brown-900: #f4ebe3;
+    --color-brown-700: #e3d6cb;
+    --color-brown-600: #cbbcb0;
+    --color-brown-500: #a6968a;
+    --color-brown-400: #8a7a6e;
+
+    /* Acentos */
+    --color-rust-500: #eda77f;
+    --color-rust-600: #a9541f;
+    --color-rust-700: #c1682f;
+    --color-rust-800: #8d4419;
+
+    --color-wine-600: #b23a52;
+    --color-wine-700: #d4566b;
+
+    /* Estados de stock */
+    --color-stock-green-bg: #15271f;
+    --color-stock-green: #6cc79a;
+    --color-stock-amber-bg: #32240e;
+    --color-stock-amber: #e3ae4f;
+    --color-stock-red-bg: #391a1e;
+    --color-stock-red: #ef7f8f;
+  }
+
   /* Cadena de altura del app-shell: el documento mide exactamente el viewport,
      así el layout general nunca scrollea; el scroll vive dentro de cada región
      (tabla de productos, nav de la sidebar, cards, drawer, dropdowns). */
@@ -80,6 +132,11 @@
   body,
   #root {
     height: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-brown-900);
   }
 
   input[type='number'] {

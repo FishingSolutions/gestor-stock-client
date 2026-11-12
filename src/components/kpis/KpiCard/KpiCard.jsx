@@ -1,7 +1,7 @@
 const tones = {
-  blue: { icon: 'bg-cream-200 text-rust-600', badge: 'bg-cream-100 text-rust-700' },
+  blue: { icon: 'bg-cream-200 text-rust-600 dark:text-rust-500', badge: 'bg-cream-100 text-rust-700 dark:text-rust-500' },
   amber: { icon: 'bg-stock-amber-bg text-stock-amber', badge: 'bg-stock-amber-bg text-stock-amber' },
-  red: { icon: 'bg-stock-red-bg text-wine-600', badge: 'bg-stock-red-bg text-wine-600' },
+  red: { icon: 'bg-stock-red-bg text-wine-600 dark:text-stock-red', badge: 'bg-stock-red-bg text-wine-600 dark:text-stock-red' },
   green: { icon: 'bg-stock-green-bg text-stock-green', badge: 'bg-stock-green-bg text-stock-green' },
 }
 

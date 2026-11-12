@@ -127,7 +127,7 @@ export default function ProductActions({
                 onClick={() => run(action)}
                 className={`flex w-full items-center gap-2.5 rounded px-2.5 py-2 text-left text-[12px] font-medium transition-colors ${
                   danger
-                    ? 'text-wine-600 hover:bg-stock-red-bg'
+                    ? 'text-wine-600 hover:bg-stock-red-bg dark:text-stock-red'
                     : 'text-brown-700 hover:bg-cream-100'
                 }`}
               >

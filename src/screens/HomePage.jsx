@@ -11,8 +11,8 @@ const HomePage = () => {
   return (
     <div className="mx-auto flex h-full min-h-0 w-full max-w-[1460px] flex-col px-4 py-4 min-[900px]:px-7 min-[900px]:py-6">
       <header className="shrink-0">
-        <p className="text-[11px] font-semibold text-rust-600">Inventario / Dashboard</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight text-rust-600">
+        <p className="text-[11px] font-semibold text-rust-600 dark:text-rust-500">Inventario / Dashboard</p>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight text-rust-600 dark:text-rust-500">
           Dashboard
         </h1>
       </header>

@@ -64,7 +64,7 @@ export default function SidebarUser({ showLabels = false }) {
       <button
         type="button"
         onClick={handleSignOut}
-        className="mt-3 flex w-full items-center gap-2.5 rounded px-1.5 text-left text-sm text-cream-300/80 transition-colors hover:bg-white/5 hover:text-cream-50"
+        className="mt-3 flex w-full items-center gap-2.5 rounded px-1.5 text-left text-sm text-cream-300/80 transition-colors hover:bg-cream-50/10 hover:text-cream-50"
       >
         <span className={avatarSlotClassName}>
           <LogOut size={16} />

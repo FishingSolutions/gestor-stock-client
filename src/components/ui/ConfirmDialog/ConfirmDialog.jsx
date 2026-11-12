@@ -56,7 +56,7 @@ export default function ConfirmDialog({
         className="w-full max-w-[400px] overflow-hidden rounded-xl bg-white shadow-2xl"
       >
         <div className="flex items-start gap-3 p-5 pb-3">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-stock-red-bg text-wine-600">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-stock-red-bg text-wine-600 dark:text-stock-red">
             <Trash2 size={17} />
           </span>
           <div className="min-w-0">

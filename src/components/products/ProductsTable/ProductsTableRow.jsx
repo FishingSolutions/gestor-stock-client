@@ -9,7 +9,7 @@ export default function ProductsTableRow({ product, canManage, onView, onEdit, o
   const level = getStockLevel(product)
 
   return (
-    <tr className="transition-colors odd:bg-white even:bg-alabaster hover:bg-[#f2eae1]">
+    <tr className="transition-colors odd:bg-white even:bg-alabaster hover:bg-cream-100">
       <td className="px-3 py-2.5">
         <input
           type="checkbox"

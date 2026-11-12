@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import FullPageLoader from '../components/FullPageLoader'
+import ThemeToggle from '../components/ui/ThemeToggle/ThemeToggle'
 
 const AUTH_ERROR_MESSAGES = {
  invalid_credentials: 'Email o contraseña incorrectos.',
@@ -77,9 +78,10 @@ function LoginPage() {
 
  return (
   <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-canvas px-4 py-10">
+   <ThemeToggle variant="canvas" className="absolute right-4 top-4 z-10" />
    <div
     aria-hidden="true"
-    className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-cream-300/70 blur-3xl"
+    className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-cream-300/70 blur-3xl dark:bg-cream-300/20"
    />
    <div
     aria-hidden="true"
@@ -166,7 +168,7 @@ function LoginPage() {
       {error && (
        <div
         role="alert"
-        className="flex items-start gap-2 rounded bg-stock-red-bg px-3 py-2.5 text-sm text-wine-600"
+        className="flex items-start gap-2 rounded bg-stock-red-bg px-3 py-2.5 text-sm text-wine-600 dark:text-stock-red"
        >
         <CircleAlert size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
         <span>{error}</span>

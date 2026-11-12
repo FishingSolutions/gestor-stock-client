@@ -19,7 +19,7 @@ export default function ErrorState({ title = 'Algo salió mal', error, onRetry }
       role="alert"
       className="flex flex-col items-center rounded-lg bg-white px-6 py-12 text-center"
     >
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-stock-red-bg text-wine-600">
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-stock-red-bg text-wine-600 dark:text-stock-red">
         <AlertTriangle size={22} />
       </div>
       <h2 className="mt-4 text-base font-semibold text-brown-900">{title}</h2>

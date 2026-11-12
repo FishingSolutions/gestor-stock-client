@@ -31,7 +31,7 @@ function SectionLabel({ children }) {
 function FieldError({ children }) {
   if (!children) return null
   return (
-    <span className="text-[10.5px] font-medium text-wine-600">{children}</span>
+    <span className="text-[10.5px] font-medium text-wine-600 dark:text-stock-red">{children}</span>
   )
 }
 
@@ -120,7 +120,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
       footer={
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="text-[11px] text-brown-500">
-            <span className="text-rust-600">*</span> Campos obligatorios
+            <span className="text-rust-600 dark:text-rust-500">*</span> Campos obligatorios
           </span>
           <div className="ml-auto flex gap-2">
             <button
@@ -145,7 +145,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
     >
       <form id="product-form" noValidate onSubmit={handleSubmit}>
         {serverError && (
-          <div className="mb-4 rounded bg-stock-red-bg px-3 py-2 text-[11.5px] text-wine-600">
+          <div className="mb-4 rounded bg-stock-red-bg px-3 py-2 text-[11.5px] text-wine-600 dark:text-stock-red">
             {serverError}
           </div>
         )}
@@ -155,7 +155,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
         <div className="flex flex-col gap-3.5">
           <label className="flex flex-col gap-1.5">
             <span className="text-[11.5px] font-semibold text-brown-600">
-              Nombre <span className="text-rust-600">*</span>
+              Nombre <span className="text-rust-600 dark:text-rust-500">*</span>
             </span>
             <input
               ref={nameRef}
@@ -174,7 +174,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <label className="flex flex-col gap-1.5">
               <span className="text-[11.5px] font-semibold text-brown-600">
-                Código <span className="text-rust-600">*</span>
+                Código <span className="text-rust-600 dark:text-rust-500">*</span>
               </span>
               <input
                 type="text"
@@ -191,7 +191,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
 
             <div className="flex min-w-0 flex-col gap-1.5">
               <span className="text-[11.5px] font-semibold text-brown-600">
-                Categoría <span className="text-rust-600">*</span>
+                Categoría <span className="text-rust-600 dark:text-rust-500">*</span>
               </span>
               <Dropdown
                 label="Categoría"
@@ -226,7 +226,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
         <div className="mt-4 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
           <label className="flex flex-col gap-1.5">
             <span className="text-[11.5px] font-semibold text-brown-600">
-              Precio costo <span className="text-rust-600">*</span>
+              Precio costo <span className="text-rust-600 dark:text-rust-500">*</span>
             </span>
             <span className="relative">
               <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[12px] text-brown-500">
@@ -250,7 +250,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
 
           <label className="flex flex-col gap-1.5">
             <span className="text-[11.5px] font-semibold text-brown-600">
-              Precio venta <span className="text-rust-600">*</span>
+              Precio venta <span className="text-rust-600 dark:text-rust-500">*</span>
             </span>
             <span className="relative">
               <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[12px] text-brown-500">
@@ -281,7 +281,7 @@ export default function ProductDrawer({ categories, onClose, onCreated }) {
           ].map(([field, label]) => (
             <label key={field} className="flex min-w-0 flex-col gap-1.5">
               <span className="text-[11.5px] font-semibold text-brown-600">
-                {label} <span className="text-rust-600">*</span>
+                {label} <span className="text-rust-600 dark:text-rust-500">*</span>
               </span>
               <span className="relative">
                 <input

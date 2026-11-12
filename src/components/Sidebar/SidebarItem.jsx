@@ -10,7 +10,7 @@ const iconSlotClassName = 'flex h-9 w-9 shrink-0 items-center justify-center'
 
 const baseItemClassName =
   'flex w-full items-center gap-2.5 rounded px-1.5 text-left text-sm transition-colors'
-const inactiveItemClassName = `${baseItemClassName} text-cream-100 hover:bg-white/5`
+const inactiveItemClassName = `${baseItemClassName} text-cream-50/90 hover:bg-cream-50/10`
 const activeItemClassName = `${baseItemClassName} bg-rust-600 font-semibold text-cream-50`
 
 function SidebarLabel({ showLabels, className, children }) {

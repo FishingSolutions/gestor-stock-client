@@ -42,7 +42,7 @@ export default function Drawer({ title, subtitle, onClose, children, footer }) {
           <div className="min-w-0">
             <h2
               id={titleId}
-              className="truncate text-lg font-bold tracking-tight text-espresso"
+              className="truncate text-lg font-bold tracking-tight text-brown-900"
             >
               {title}
             </h2>

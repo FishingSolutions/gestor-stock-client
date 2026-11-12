@@ -1,5 +1,6 @@
 import { Package } from 'lucide-react'
 import { cx } from '../../lib/cx'
+import ThemeToggle from '../ui/ThemeToggle/ThemeToggle'
 import { sidebarSections } from './sidebarSections'
 import SidebarItem from './SidebarItem'
 import SidebarUser from './SidebarUser'
@@ -42,7 +43,7 @@ export default function Sidebar({ className = '', variant = 'rail', onNavigate }
   return (
     <aside
       className={cx(
-        'group/sidebar flex h-full flex-col overflow-hidden bg-espresso p-2 text-cream-100',
+        'group/sidebar flex h-full flex-col overflow-hidden bg-espresso p-2 text-cream-50/90',
         variantClassName[variant] ?? variantClassName.full,
         className,
       )}
@@ -77,6 +78,10 @@ export default function Sidebar({ className = '', variant = 'rail', onNavigate }
           </div>
         ))}
       </nav>
+
+      <div className="mt-4">
+        <ThemeToggle showLabels={showLabels} />
+      </div>
 
       <SidebarUser showLabels={showLabels} />
     </aside>

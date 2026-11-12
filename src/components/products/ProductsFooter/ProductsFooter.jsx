@@ -29,7 +29,7 @@ export default function ProductsFooter({
           <button
             type="button"
             onClick={onLoadMore}
-            className="rounded bg-white px-4 py-2 text-[12.5px] font-semibold text-espresso transition-colors hover:bg-cream-100"
+            className="rounded bg-white px-4 py-2 text-[12.5px] font-semibold text-brown-900 transition-colors hover:bg-cream-100"
           >
             Cargar más productos
           </button>

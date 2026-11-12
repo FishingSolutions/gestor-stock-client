@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Menu, Package, X } from 'lucide-react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../../Sidebar/Sidebar'
+import ThemeToggle from '../../ui/ThemeToggle/ThemeToggle'
 import { useAuth } from '../../../context/AuthContext'
 
 function getInitials(user) {
@@ -36,7 +37,7 @@ export default function AppShell() {
             type="button"
             onClick={() => setMenuOpen(true)}
             aria-label="Abrir menú"
-            className="inline-flex h-9 w-9 items-center justify-center rounded text-cream-100 transition-colors hover:bg-white/5"
+            className="inline-flex h-9 w-9 items-center justify-center rounded text-cream-50/90 transition-colors hover:bg-cream-50/10"
           >
             <Menu size={20} />
           </button>
@@ -48,7 +49,9 @@ export default function AppShell() {
             StockFX
           </span>
 
-          <span className="ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-cream-200 text-xs font-semibold text-brown-900">
+          <ThemeToggle variant="icon" className="ml-auto" />
+
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cream-200 text-xs font-semibold text-brown-900">
             {getInitials(user)}
           </span>
         </header>
@@ -72,7 +75,7 @@ export default function AppShell() {
               type="button"
               onClick={closeMenu}
               aria-label="Cerrar menú"
-              className="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded text-cream-100 transition-colors hover:bg-white/5"
+              className="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded text-cream-50/90 transition-colors hover:bg-cream-50/10"
             >
               <X size={18} />
             </button>
