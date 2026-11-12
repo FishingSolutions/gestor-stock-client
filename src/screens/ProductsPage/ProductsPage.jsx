@@ -211,7 +211,11 @@ export default function ProductsPage() {
           canManageProducts={isAdmin}
           onViewProduct={(product, mode) => setDetail({ product, mode })}
           onEditProduct={(product, mode) => setDetail({ product, mode })}
-          onMovementsProduct={() => navigate('/movimientos')}
+          onMovementsProduct={(product) =>
+           navigate('/movimientos', {
+            state: { idProducto: product.id, productoNombre: product.nombre },
+           })
+          }
           onDeleteProduct={(product) => setDeleteTarget(product)}
           footer={<ProductsFooter variant="desktop" {...footerProps} />}
          />

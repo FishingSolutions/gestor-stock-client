@@ -10,7 +10,7 @@ import {
   deleteProduct,
   updateProduct,
 } from '../../../features/products/services/productsService'
-import { registrarMovimientoTemp } from '../../../features/products/mocks/movimientosTemp'
+import { createMovement } from '../../../features/movements/services/movementsService'
 
 const inputClassName =
   'h-10 w-full rounded bg-cream-100 px-3 text-[12.5px] text-brown-900 outline-none transition placeholder:text-brown-400 focus:bg-white focus:ring-2 focus:ring-rust-500/20'
@@ -142,20 +142,24 @@ export default function ProductDetailDrawer({
     setServerError(null)
 
     try {
-      await updateProduct(product.id, { ...form, idCategoria: form.categoria })
-
-      // TEMP: el registro del movimiento va a la capa temporal; hace falta que
-      // Supabase habilite el INSERT en movimiento_stock (una RPC que lo haga
-      // transaccional con el update de arriba) para poder reemplazar esto.
       if (stockCambio) {
-        registrarMovimientoTemp({
+        // Primero guardamos los demás campos sin tocar el stock, y después
+        // registramos el AJUSTE en el backend: la RPC actualiza el stock y el
+        // movimiento en una sola transacción.
+        await updateProduct(
+          product.id,
+          { ...form, idCategoria: form.categoria },
+          { updateStock: false },
+        )
+
+        await createMovement({
           idProducto: product.id,
           tipo: 'AJUSTE',
-          cantidad: Math.abs(Number(form.stockActual) - product.stockActual),
-          stockAnterior: product.stockActual,
-          stockResultante: Number(form.stockActual),
+          cantidad: Number(form.stockActual),
           motivo: form.motivoAjuste,
         })
+      } else {
+        await updateProduct(product.id, { ...form, idCategoria: form.categoria })
       }
 
       onUpdated?.()

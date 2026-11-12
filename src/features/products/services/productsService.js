@@ -91,6 +91,12 @@ export async function createProduct({
   return data
 }
 
+/**
+ * Actualiza un producto vía Supabase.
+ *
+ * `options.updateStock = false` permite guardar los demás campos sin tocar
+ * `stock_actual`; en ese caso el stock lo modifica la RPC de movimientos.
+ */
 export async function updateProduct(
   id,
   {
@@ -105,21 +111,27 @@ export async function updateProduct(
     activo,
     idCategoria,
   },
+  { updateStock = true } = {},
 ) {
+  const payload = {
+    codigo: codigo.trim(),
+    nombre: nombre.trim(),
+    descripcion: descripcion.trim(),
+    precio_costo: Number(precioCosto) || 0,
+    precio_venta: Number(precioVenta) || 0,
+    stock_minimo: Number(stockMinimo) || 0,
+    stock_maximo: Number(stockMaximo) || 0,
+    activo: Boolean(activo),
+    id_categoria: idCategoria || null,
+  }
+
+  if (updateStock) {
+    payload.stock_actual = Number(stockActual) || 0
+  }
+
   const { data, error } = await supabase
     .from('producto')
-    .update({
-      codigo: codigo.trim(),
-      nombre: nombre.trim(),
-      descripcion: descripcion.trim(),
-      precio_costo: Number(precioCosto) || 0,
-      precio_venta: Number(precioVenta) || 0,
-      stock_actual: Number(stockActual) || 0,
-      stock_minimo: Number(stockMinimo) || 0,
-      stock_maximo: Number(stockMaximo) || 0,
-      activo: Boolean(activo),
-      id_categoria: idCategoria || null,
-    })
+    .update(payload)
     .eq('id_producto', id)
     .select('id_producto')
     .single()
