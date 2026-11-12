@@ -88,7 +88,39 @@ export async function createProduct({
     .single()
 
   if (error) throw error
+
+  // Stock inicial: la base lo registra como movimiento (ENTRADA 0 → stock)
+  // vía RPC transaccional; sin esto el alta no aparece en movimientos
+  const initialStock = Number(stockActual) || 0
+  if (initialStock > 0) {
+    const { error: movementError } = await supabase.rpc('registrar_stock_inicial', {
+      p_id_producto: data.id_producto,
+      p_cantidad: initialStock,
+    })
+    if (movementError) {
+      throw new Error(
+        `El producto se creó, pero falló el registro del stock inicial: ${movementError.message}`,
+      )
+    }
+  }
+
   return data
+}
+
+/**
+ * Ajuste de stock vía RPC de Supabase (security definer): el servidor
+ * calcula stock_anterior/resultante desde el stock real de la base,
+ * actualiza producto.stock_actual e inserta el movimiento en una
+ * transacción. El cliente solo declara tipo, magnitud y motivo.
+ */
+export async function registrarAjusteStock({ idProducto, tipo, cantidad, motivo }) {
+  const { error } = await supabase.rpc('ajustar_stock', {
+    p_id_producto: idProducto,
+    p_tipo: tipo,
+    p_cantidad: cantidad,
+    p_motivo: motivo,
+  })
+  if (error) throw error
 }
 
 export async function updateProduct(
