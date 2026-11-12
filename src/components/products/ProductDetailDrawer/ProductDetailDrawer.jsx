@@ -8,9 +8,9 @@ import StockTag from '../StockTag/StockTag'
 import { getStockLevel } from '../../../features/products/utils/stock'
 import {
   deleteProduct,
+  registrarAjusteStock,
   updateProduct,
 } from '../../../features/products/services/productsService'
-import { registrarMovimientoTemp } from '../../../features/products/mocks/movimientosTemp'
 
 const inputClassName =
   'h-10 w-full rounded bg-cream-100 px-3 text-[12.5px] text-brown-900 outline-none transition placeholder:text-brown-400 focus:bg-white focus:ring-2 focus:ring-rust-500/20'
@@ -142,19 +142,22 @@ export default function ProductDetailDrawer({
     setServerError(null)
 
     try {
-      await updateProduct(product.id, { ...form, idCategoria: form.categoria })
+      // Si cambia el stock, el RPC ajustar_stock es el dueño del número:
+      // el update de acá no lo toca (envía el stock sin cambios) para no
+      // doble-contar, y el movimiento sale con los valores del servidor
+      await updateProduct(product.id, {
+        ...form,
+        idCategoria: form.categoria,
+        stockActual: stockCambio ? product.stockActual : Number(form.stockActual),
+      })
 
-      // TEMP: el registro del movimiento va a la capa temporal; hace falta que
-      // Supabase habilite el INSERT en movimiento_stock (una RPC que lo haga
-      // transaccional con el update de arriba) para poder reemplazar esto.
       if (stockCambio) {
-        registrarMovimientoTemp({
+        const nuevoStock = Number(form.stockActual)
+        await registrarAjusteStock({
           idProducto: product.id,
-          tipo: 'AJUSTE',
-          cantidad: Math.abs(Number(form.stockActual) - product.stockActual),
-          stockAnterior: product.stockActual,
-          stockResultante: Number(form.stockActual),
-          motivo: form.motivoAjuste,
+          tipo: nuevoStock > product.stockActual ? 'ENTRADA' : 'SALIDA',
+          cantidad: Math.abs(nuevoStock - product.stockActual),
+          motivo: form.motivoAjuste.trim(),
         })
       }
 

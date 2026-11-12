@@ -72,6 +72,83 @@
   }
 }
 
+/* ── Dashboard: gráfico de actividad (idéntico al mockup) ─────────── */
+@keyframes chart-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes chart-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* En @layer components para que las utilities de Tailwind (ej.
+   min-[900px]:grid-cols-2) puedan sobrescribir estas reglas base. */
+@layer components {
+  .line-path {
+    fill: none;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .chart-line-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: chart-draw 1.6s ease forwards;
+  }
+  .chart-area {
+    animation: chart-fade 0.8s ease 0.4s both;
+  }
+  .chart-dot {
+    animation: chart-fade 0.4s ease 1s both;
+  }
+  /* % alrededor del anillo: aparecen con fade al expandir la card */
+  .donut-pct {
+    animation: chart-fade 0.35s ease 0.15s both;
+  }
+
+  /* ── Dashboard: acordeón de "Más detalles" ────────────────────────── */
+  .dash-details {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .dash-details.open {
+    grid-template-rows: 1fr;
+  }
+  .dash-details-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .dash-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.4s ease 0.18s,
+      transform 0.4s ease 0.18s;
+  }
+  .dash-details.open .dash-details-grid {
+    opacity: 1;
+    transform: none;
+  }
+  .dash-details .rank-bar i {
+    width: 0;
+    transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .dash-details.open .rank-bar i {
+    width: var(--w);
+  }
+}
+
 @layer base {
   /* Cadena de altura del app-shell: el documento mide exactamente el viewport,
      así el layout general nunca scrollea; el scroll vive dentro de cada región
