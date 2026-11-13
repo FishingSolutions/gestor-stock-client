@@ -9,7 +9,7 @@ const TIPO_BADGE = {
   AJUSTE: { className: 'mov-badge ajuste', label: '⚖ Ajuste' },
 }
 
-// Título del motivo según el tipo; la descripción es el texto del operador.
+// Título del motivo según el tipo.
 const MOTIVO_TITLE = {
   ENTRADA: 'Ingreso de stock',
   SALIDA: 'Salida de stock',
@@ -30,11 +30,8 @@ function Field({ label, children, wide = false }) {
   )
 }
 
-/**
- * Drawer de detalle de un movimiento (solo lectura). La regla muestra la
- * escala del producto y el tramo que este movimiento sumó o restó.
- */
-export default function MovementDetailDrawer({ movement, onClose }) {
+/** Drawer de detalle de un movimiento (solo lectura). */
+export default function MovementDetailDrawer({ movement, onClose, onOpenProduct }) {
   if (!movement) return null
 
   const tipo = TIPO_BADGE[movement.tipoRaw] ?? {
@@ -78,7 +75,18 @@ export default function MovementDetailDrawer({ movement, onClose }) {
         <div className="dv-sec-label">Detalle</div>
 
         <Field label="Producto" wide>
-          <span className="dv-name">{movement.productoNombre}</span>
+          {onOpenProduct && movement.idProducto ? (
+            <button
+              type="button"
+              onClick={() => onOpenProduct(movement.idProducto)}
+              title="Ver detalle del producto"
+              className="dv-name dv-name-link"
+            >
+              {movement.productoNombre}
+            </button>
+          ) : (
+            <span className="dv-name">{movement.productoNombre}</span>
+          )}
           <span className="dv-sku">
             {movement.productoCodigo}
             {movement.productoCategoria ? ` · ${movement.productoCategoria}` : ''}

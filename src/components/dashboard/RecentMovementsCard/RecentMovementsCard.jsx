@@ -48,7 +48,12 @@ function initials(name) {
  * Card "Últimos movimientos de stock" (modelo E): tabla con los últimos
  * movimientos reales y el link a /movimientos como footer.
  */
-export default function RecentMovementsCard({ movements = [], pending = false, className = '' }) {
+export default function RecentMovementsCard({
+  movements = [],
+  pending = false,
+  days = 30,
+  className = '',
+}) {
   const navigate = useNavigate()
   const visibleMovements = movements.slice(0, MAX_ROWS)
   const hasData = visibleMovements.length > 0
@@ -84,7 +89,18 @@ export default function RecentMovementsCard({ movements = [], pending = false, c
               {visibleMovements.map((movement) => (
                 <tr
                   key={movement.id}
-                  className="group cursor-pointer border-b border-cream-100 transition-colors hover:bg-alabaster last:border-b-0"
+                  tabIndex={0}
+                  aria-label={`Ver detalle del movimiento de ${movement.productoNombre}`}
+                  onClick={() =>
+                    navigate('/movimientos', { state: { movementId: movement.id } })
+                  }
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      navigate('/movimientos', { state: { movementId: movement.id } })
+                    }
+                  }}
+                  className="group cursor-pointer border-b border-cream-100 transition-colors hover:bg-alabaster last:border-b-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rust-500/40"
                 >
                   <td className="max-w-[260px] py-2 pr-3">
                     <p className="truncate font-semibold text-brown-900">
@@ -123,9 +139,7 @@ export default function RecentMovementsCard({ movements = [], pending = false, c
                       <span className="truncate">{movement.operador}</span>
                     </span>
                   </td>
-                  {/* CTA de hover (mockup): columna propia, centrada como el
-                      resto de los campos. El click a /movimientos con detalle
-                      viene cuando armemos esa página */}
+                  {/* CTA de hover: columna propia. */}
                   <td className="py-2">
                     <span className="flex items-center justify-end gap-1 opacity-0 text-[10.5px] font-bold whitespace-nowrap text-rust-600 transition-opacity duration-150 group-hover:opacity-100">
                       Ver detalle
@@ -148,7 +162,7 @@ export default function RecentMovementsCard({ movements = [], pending = false, c
 
       <button
         type="button"
-        onClick={() => navigate('/movimientos')}
+        onClick={() => navigate('/movimientos', { state: { days } })}
         className="mt-auto flex items-center gap-1.5 self-start pt-3 text-[11.5px] font-semibold text-rust-600 hover:text-rust-700 hover:underline"
       >
         Ver todos los movimientos

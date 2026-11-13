@@ -56,7 +56,7 @@ export async function fetchRecentMovements(days = 30) {
 
 /* ── Pantalla de movimientos: listado paginado y filtrable ──────────────── */
 
-// Campos de página: suman mín/máx y categoría (los usa la regla del drawer).
+// Campos del listado de movimientos.
 const PAGE_FIELDS = `
   id_movimiento,
   id_producto,
@@ -151,6 +151,18 @@ export async function fetchMovementsPage({
   if (error) throw error
 
   return { items: (data ?? []).map(mapPageMovement), total: count ?? 0 }
+}
+
+/** Un movimiento por id (para abrir el drawer desde el dashboard). */
+export async function fetchMovementById(id) {
+  const { data, error } = await supabase
+    .from('movimiento_stock')
+    .select(PAGE_FIELDS)
+    .eq('id_movimiento', id)
+    .maybeSingle()
+
+  if (error) throw error
+  return data ? mapPageMovement(data) : null
 }
 
 /** Totales del período para los KPIs (solo campos mínimos, en tandas). */

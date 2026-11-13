@@ -147,6 +147,7 @@ const HomePage = () => {
             <RecentMovementsCard
               movements={movements}
               pending={movementsLoading}
+              days={days}
               className="xl:col-span-2"
             />
             <LowStockCard products={lowStockProducts} />

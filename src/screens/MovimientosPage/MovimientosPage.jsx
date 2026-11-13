@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeftRight, Download, Eye, Search } from 'lucide-react'
 import Dropdown from '../../components/ui/Dropdown/Dropdown'
 import ErrorState from '../../components/ui/ErrorState/ErrorState'
@@ -10,7 +11,7 @@ import {
   useMovementStats,
   useMovementsPage,
 } from '../../features/movements/hooks/useMovementsPage'
-import { fetchMovementsPage } from '../../features/movements/services/movementsService'
+import { fetchMovementById, fetchMovementsPage } from '../../features/movements/services/movementsService'
 import {
   exportMovementsCsv,
   formatDayLabel,
@@ -121,18 +122,45 @@ function MovementsEmpty() {
 }
 
 /**
- * Historial de movimientos (modelo H): KPIs, filtros, tabla con riel
- * cronológico, separadores por día y footer como el de productos.
+ * Historial de movimientos (modelo H).
  */
 export default function MovimientosPage() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  // Estado de llegada desde el dashboard.
   const [search, setSearch] = useState('')
   const [tipo, setTipo] = useState('all')
-  const [days, setDays] = useState(30)
+  const [days, setDays] = useState(
+    typeof location.state?.days === 'number' ? location.state.days : 30,
+  )
   const [month, setMonth] = useState(null)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(PAGE_SIZE)
   const [selected, setSelected] = useState(null)
   const [showKpis, setShowKpis] = useState(true)
+  const [openingId, setOpeningId] = useState(() => location.state?.movementId ?? null)
+
+  // Trae el movimiento pedido por id y abre su drawer.
+  useEffect(() => {
+    if (!openingId) return
+    let active = true
+
+    fetchMovementById(openingId)
+      .then((movement) => {
+        if (active && movement) setSelected(movement)
+      })
+      .finally(() => {
+        if (active) setOpeningId(null)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [openingId])
+
+  const openProduct = (productId) =>
+    navigate('/productos', { state: { productId } })
 
   const { items, total, loading, error, reload } = useMovementsPage({
     tipo,
@@ -149,7 +177,7 @@ export default function MovimientosPage() {
     ? new Date(Number(month.split('-')[0]), Number(month.split('-')[1]), 0).getDate()
     : days
 
-  // Reset de página al cambiar filtros (en el handler, no en un efecto).
+  // Reset de página al cambiar filtros.
   const changeTipo = (value) => {
     setTipo(value)
     setPage(1)
@@ -367,7 +395,11 @@ export default function MovimientosPage() {
       </div>
 
       {selected && (
-        <MovementDetailDrawer movement={selected} onClose={() => setSelected(null)} />
+        <MovementDetailDrawer
+          movement={selected}
+          onClose={() => setSelected(null)}
+          onOpenProduct={openProduct}
+        />
       )}
     </div>
   )
@@ -379,7 +411,6 @@ function MovementRow({ movement, onOpen }) {
     label: movement.tipoRaw,
   }
   const up = movement.variacion >= 0
-  // El riel usa el color del tipo (ajuste = ámbar), no la dirección.
   const railDot = { ENTRADA: 'entrada', SALIDA: 'salida', AJUSTE: 'ajuste' }[
     movement.tipoRaw
   ] ?? (up ? 'entrada' : 'salida')
