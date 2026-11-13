@@ -2,6 +2,63 @@ import { TIPO_LABEL } from '../services/movementsService'
 
 const dayFormat = new Intl.DateTimeFormat('es-AR', { day: 'numeric', month: 'short' })
 
+/* ── Formatos de fecha para la pantalla de movimientos ──────────────────── */
+
+const fullDateFormat = new Intl.DateTimeFormat('es-AR', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+})
+
+const dayLabelFormat = new Intl.DateTimeFormat('es-AR', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+})
+
+const timeFormat = new Intl.DateTimeFormat('es-AR', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+})
+
+function localDayKey(iso) {
+  const date = new Date(iso)
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${date.getFullYear()}-${month}-${day}`
+}
+
+function todayKey() {
+  return localDayKey(new Date().toISOString())
+}
+
+function yesterdayKey() {
+  const date = new Date()
+  date.setDate(date.getDate() - 1)
+  return localDayKey(date.toISOString())
+}
+
+/** Etiqueta del día: "Hoy · 30 oct 2024" / "Ayer · ..." / "28 oct 2024". */
+export function formatDayLabel(iso) {
+  const key = localDayKey(iso)
+  const base = dayLabelFormat.format(new Date(iso))
+  if (key === todayKey()) return `Hoy · ${base}`
+  if (key === yesterdayKey()) return `Ayer · ${base}`
+  return base
+}
+
+/** Hora del movimiento: "15:42". */
+export function formatTime(iso) {
+  return timeFormat.format(new Date(iso))
+}
+
+/** Fecha y hora completa: "30/10/2024 · 15:42:10". */
+export function formatFullDateTime(iso) {
+  const date = new Date(iso)
+  return `${fullDateFormat.format(date)} · ${timeFormat.format(date)}:${String(date.getSeconds()).padStart(2, '0')}`
+}
+
 /**
  * Agrupa los movimientos por día para el gráfico de actividad:
  * ENTRADA suma a entradas, SALIDA a salidas (los AJUSTE no se grafican).
@@ -57,11 +114,8 @@ export function buildSalesRanking(movements) {
 
 export { TIPO_LABEL }
 
-/**
- * Descarga el informe de movimientos del período como CSV (separador ;
- * y BOM para que Excel lo abra bien con acentos).
- */
-export function exportMovementsCsv(movements, days = 30) {
+/** CSV del informe (separador ; y BOM para Excel). */
+export function exportMovementsCsv(movements, days = 30, monthLabel = null) {
   const headers = [
     'id',
     'fecha',
@@ -96,7 +150,9 @@ export function exportMovementsCsv(movements, days = 30) {
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
-  link.download = `movimientos-${days}dias.csv`
+  link.download = monthLabel
+    ? `movimientos-${monthLabel}.csv`
+    : `movimientos-${days}dias.csv`
   link.click()
   URL.revokeObjectURL(url)
 }
