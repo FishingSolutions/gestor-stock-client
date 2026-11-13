@@ -2,7 +2,7 @@ import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
-export default function Drawer({ title, subtitle, onClose, children, footer }) {
+export default function Drawer({ title, subtitle, headerRight, onClose, children, footer }) {
   const titleId = useId()
   const onCloseRef = useRef(onClose)
 
@@ -39,18 +39,21 @@ export default function Drawer({ title, subtitle, onClose, children, footer }) {
         className="flex h-full w-full max-w-[480px] flex-col bg-white motion-safe:animate-[drawer-in_180ms_ease-out]"
       >
         <header className="flex shrink-0 items-center justify-between gap-4 px-5 pb-2 pt-5 sm:px-6">
-          <div className="min-w-0">
-            <h2
-              id={titleId}
-              className="truncate text-lg font-bold tracking-tight text-espresso"
-            >
-              {title}
-            </h2>
-            {subtitle && (
-              <p className="mt-0.5 truncate text-[11.5px] text-brown-500">
-                {subtitle}
-              </p>
-            )}
+          <div className="flex min-w-0 items-center gap-2.5">
+            <div className="min-w-0">
+              <h2
+                id={titleId}
+                className="truncate text-lg font-bold tracking-tight text-espresso"
+              >
+                {title}
+              </h2>
+              {subtitle && (
+                <p className="mt-0.5 truncate text-[11.5px] text-brown-500">
+                  {subtitle}
+                </p>
+              )}
+            </div>
+            {headerRight}
           </div>
           <button
             type="button"
