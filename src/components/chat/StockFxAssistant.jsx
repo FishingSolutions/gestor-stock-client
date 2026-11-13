@@ -113,20 +113,18 @@ export default function StockFxAssistant() {
               </div>
             ))}
 
-            {messages.length === 1 && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {quickQuestions.map((question) => (
-                  <button
-                    key={question}
-                    type="button"
-                    onClick={() => sendMessage(question)}
-                    className="rounded-full border border-cream-300 bg-white px-3 py-1.5 text-left text-[11px] font-medium text-brown-600 transition hover:border-rust-500 hover:text-rust-600"
-                  >
-                    {question}
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="flex flex-wrap gap-2 pt-1">
+              {quickQuestions.map((question) => (
+                <button
+                  key={question}
+                  type="button"
+                  onClick={() => sendMessage(question)}
+                  className="rounded-full border border-cream-300 bg-white px-3 py-1.5 text-left text-[11px] font-medium text-brown-600 transition hover:border-rust-500 hover:text-rust-600"
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
             <div ref={bottomRef} />
           </div>
 
