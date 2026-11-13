@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeftRight, Download, Eye, Search } from 'lucide-react'
 import Dropdown from '../../components/ui/Dropdown/Dropdown'
 import ErrorState from '../../components/ui/ErrorState/ErrorState'
@@ -10,7 +11,7 @@ import {
   useMovementStats,
   useMovementsPage,
 } from '../../features/movements/hooks/useMovementsPage'
-import { fetchMovementsPage } from '../../features/movements/services/movementsService'
+import { fetchMovementById, fetchMovementsPage } from '../../features/movements/services/movementsService'
 import {
   exportMovementsCsv,
   formatDayLabel,
@@ -125,14 +126,43 @@ function MovementsEmpty() {
  * cronológico, separadores por día y footer como el de productos.
  */
 export default function MovimientosPage() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  // Estado de llegada: el dashboard manda movementId (fila → drawer) o days
+  // (filtros sincronizados en "Ver todos los movimientos").
   const [search, setSearch] = useState('')
   const [tipo, setTipo] = useState('all')
-  const [days, setDays] = useState(30)
+  const [days, setDays] = useState(
+    typeof location.state?.days === 'number' ? location.state.days : 30,
+  )
   const [month, setMonth] = useState(null)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(PAGE_SIZE)
   const [selected, setSelected] = useState(null)
   const [showKpis, setShowKpis] = useState(true)
+  const [openingId, setOpeningId] = useState(() => location.state?.movementId ?? null)
+
+  // Trae el movimiento pedido por id y abre su drawer.
+  useEffect(() => {
+    if (!openingId) return
+    let active = true
+
+    fetchMovementById(openingId)
+      .then((movement) => {
+        if (active && movement) setSelected(movement)
+      })
+      .finally(() => {
+        if (active) setOpeningId(null)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [openingId])
+
+  const openProduct = (productId) =>
+    navigate('/productos', { state: { productId } })
 
   const { items, total, loading, error, reload } = useMovementsPage({
     tipo,
@@ -367,7 +397,11 @@ export default function MovimientosPage() {
       </div>
 
       {selected && (
-        <MovementDetailDrawer movement={selected} onClose={() => setSelected(null)} />
+        <MovementDetailDrawer
+          movement={selected}
+          onClose={() => setSelected(null)}
+          onOpenProduct={openProduct}
+        />
       )}
     </div>
   )

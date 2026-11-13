@@ -35,12 +35,17 @@ export default function ProductsPage() {
  const [drawerOpen, setDrawerOpen] = useState(false)
  const [detail, setDetail] = useState(null)
  const chatbotDraft = isAdmin ? location.state?.productDraft : null
- const productDrawerOpen = drawerOpen || Boolean(chatbotDraft)
+ // Llegada desde movimientos: abre la ficha del producto elegido.
+ const stateProduct = location.state?.productId
+  ? products.find((product) => product.id === location.state.productId) ?? null
+  : null
+ const productDrawerOpen = drawerOpen || Boolean(chatbotDraft) || Boolean(stateProduct)
 
  const closeProductDrawer = () => {
   setDrawerOpen(false)
+  setDetail(null)
 
-  if (location.state?.productDraft) {
+  if (location.state?.productDraft || location.state?.productId) {
    navigate(location.pathname, { replace: true, state: null })
   }
  }
@@ -249,13 +254,13 @@ export default function ProductsPage() {
     />
    )}
 
-   {detail && (
+   {productDrawerOpen && (stateProduct || detail) && (
     <ProductDetailDrawer
-     product={detail.product}
-     initialMode={detail.mode}
+     product={detail?.product ?? stateProduct}
+     initialMode={detail?.mode ?? 'view'}
      canManage={isAdmin}
      categories={categoryOptions}
-     onClose={() => setDetail(null)}
+     onClose={closeProductDrawer}
      onUpdated={reload}
      onDeleted={reload}
     />

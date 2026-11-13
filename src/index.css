@@ -542,6 +542,22 @@
   color: var(--color-brown-900);
 }
 
+.dv-field .dv-name-link {
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  transition: color 0.15s;
+}
+
+.dv-field .dv-name-link:hover {
+  color: var(--color-rust-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .dv-field .dv-sku {
   display: block;
   font-size: 11px;

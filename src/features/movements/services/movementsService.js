@@ -153,6 +153,18 @@ export async function fetchMovementsPage({
   return { items: (data ?? []).map(mapPageMovement), total: count ?? 0 }
 }
 
+/** Un movimiento por id (para abrir el drawer desde el dashboard). */
+export async function fetchMovementById(id) {
+  const { data, error } = await supabase
+    .from('movimiento_stock')
+    .select(PAGE_FIELDS)
+    .eq('id_movimiento', id)
+    .maybeSingle()
+
+  if (error) throw error
+  return data ? mapPageMovement(data) : null
+}
+
 /** Totales del período para los KPIs (solo campos mínimos, en tandas). */
 export async function fetchMovementStats({ days = 30, month = null } = {}) {
   const rows = []
