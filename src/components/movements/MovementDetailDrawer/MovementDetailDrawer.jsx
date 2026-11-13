@@ -9,7 +9,7 @@ const TIPO_BADGE = {
   AJUSTE: { className: 'mov-badge ajuste', label: '⚖ Ajuste' },
 }
 
-// Título del motivo según el tipo; la descripción es el texto del operador.
+// Título del motivo según el tipo.
 const MOTIVO_TITLE = {
   ENTRADA: 'Ingreso de stock',
   SALIDA: 'Salida de stock',
@@ -30,10 +30,7 @@ function Field({ label, children, wide = false }) {
   )
 }
 
-/**
- * Drawer de detalle de un movimiento (solo lectura). La regla muestra la
- * escala del producto y el tramo que este movimiento sumó o restó.
- */
+/** Drawer de detalle de un movimiento (solo lectura). */
 export default function MovementDetailDrawer({ movement, onClose, onOpenProduct }) {
   if (!movement) return null
 

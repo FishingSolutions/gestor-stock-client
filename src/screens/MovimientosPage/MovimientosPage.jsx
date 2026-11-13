@@ -122,15 +122,13 @@ function MovementsEmpty() {
 }
 
 /**
- * Historial de movimientos (modelo H): KPIs, filtros, tabla con riel
- * cronológico, separadores por día y footer como el de productos.
+ * Historial de movimientos (modelo H).
  */
 export default function MovimientosPage() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  // Estado de llegada: el dashboard manda movementId (fila → drawer) o days
-  // (filtros sincronizados en "Ver todos los movimientos").
+  // Estado de llegada desde el dashboard.
   const [search, setSearch] = useState('')
   const [tipo, setTipo] = useState('all')
   const [days, setDays] = useState(
@@ -179,7 +177,7 @@ export default function MovimientosPage() {
     ? new Date(Number(month.split('-')[0]), Number(month.split('-')[1]), 0).getDate()
     : days
 
-  // Reset de página al cambiar filtros (en el handler, no en un efecto).
+  // Reset de página al cambiar filtros.
   const changeTipo = (value) => {
     setTipo(value)
     setPage(1)
@@ -413,7 +411,6 @@ function MovementRow({ movement, onOpen }) {
     label: movement.tipoRaw,
   }
   const up = movement.variacion >= 0
-  // El riel usa el color del tipo (ajuste = ámbar), no la dirección.
   const railDot = { ENTRADA: 'entrada', SALIDA: 'salida', AJUSTE: 'ajuste' }[
     movement.tipoRaw
   ] ?? (up ? 'entrada' : 'salida')

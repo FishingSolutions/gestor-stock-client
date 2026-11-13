@@ -139,9 +139,7 @@ export default function RecentMovementsCard({
                       <span className="truncate">{movement.operador}</span>
                     </span>
                   </td>
-                  {/* CTA de hover (mockup): columna propia, centrada como el
-                      resto de los campos. La fila navega a /movimientos y
-                      abre el drawer de ese movimiento. */}
+                  {/* CTA de hover: columna propia. */}
                   <td className="py-2">
                     <span className="flex items-center justify-end gap-1 opacity-0 text-[10.5px] font-bold whitespace-nowrap text-rust-600 transition-opacity duration-150 group-hover:opacity-100">
                       Ver detalle

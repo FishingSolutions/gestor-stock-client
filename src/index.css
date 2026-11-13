@@ -174,9 +174,7 @@
   }
 }
 
-/* ── Movimientos: tabla con riel cronológico (modelo H) ────────────────────
-   La línea del riel corre por detrás de las filas; el header sticky y el
-   footer la tapan. En pantallas angostas se pliegan columnas. */
+/* ── Movimientos: tabla con riel cronológico ─────────────────────────────── */
 .mov-card {
   position: relative;
 }

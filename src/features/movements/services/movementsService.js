@@ -56,7 +56,7 @@ export async function fetchRecentMovements(days = 30) {
 
 /* ── Pantalla de movimientos: listado paginado y filtrable ──────────────── */
 
-// Campos de página: suman mín/máx y categoría (los usa la regla del drawer).
+// Campos del listado de movimientos.
 const PAGE_FIELDS = `
   id_movimiento,
   id_producto,
