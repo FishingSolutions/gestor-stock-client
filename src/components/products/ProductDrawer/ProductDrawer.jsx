@@ -16,6 +16,17 @@ const INITIAL_FORM = {
   activo: 'activo',
 }
 
+function buildInitialForm(initialValues) {
+  return {
+    ...INITIAL_FORM,
+    ...initialValues,
+    stockActual:
+      initialValues?.stockActual === undefined
+        ? INITIAL_FORM.stockActual
+        : String(initialValues.stockActual),
+  }
+}
+
 const inputClassName =
   'h-10 w-full rounded bg-cream-100 px-3 text-[12.5px] text-brown-900 outline-none transition placeholder:text-brown-400 focus:bg-white focus:ring-2 focus:ring-rust-500/20'
 
@@ -35,8 +46,8 @@ function FieldError({ children }) {
   )
 }
 
-export default function ProductDrawer({ categories, onClose, onCreated }) {
-  const [form, setForm] = useState(INITIAL_FORM)
+export default function ProductDrawer({ categories, initialValues, onClose, onCreated }) {
+  const [form, setForm] = useState(() => buildInitialForm(initialValues))
   const [errors, setErrors] = useState({})
   const [serverError, setServerError] = useState(null)
   const [saving, setSaving] = useState(false)
