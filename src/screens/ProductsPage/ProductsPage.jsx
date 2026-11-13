@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Download, Plus } from 'lucide-react'
 import ProductsToolbar from '../../components/products/ProductsToolbar/ProductsToolbar'
 import ProductsTable from '../../components/products/ProductsTable/ProductsTable'
@@ -17,6 +17,7 @@ import { useAuth } from '../../context/AuthContext'
 
 export default function ProductsPage() {
  const navigate = useNavigate()
+ const location = useLocation()
  const { products, loading, error, reload } = useProducts()
  const { profile } = useAuth()
  // El rol es un string (por ahora solo existe ADMINISTRADOR). Ese rol habilita
@@ -33,6 +34,16 @@ export default function ProductsPage() {
  const [pageSize, setPageSize] = useState(10)
  const [drawerOpen, setDrawerOpen] = useState(false)
  const [detail, setDetail] = useState(null)
+ const chatbotDraft = isAdmin ? location.state?.productDraft : null
+ const productDrawerOpen = drawerOpen || Boolean(chatbotDraft)
+
+ const closeProductDrawer = () => {
+  setDrawerOpen(false)
+
+  if (location.state?.productDraft) {
+   navigate(location.pathname, { replace: true, state: null })
+  }
+ }
 
  const categoryOptions = useMemo(() => {
   const byId = new Map()
@@ -139,7 +150,9 @@ export default function ProductsPage() {
       {isAdmin && (
        <button
         type="button"
-        onClick={() => setDrawerOpen(true)}
+        onClick={() => {
+         setDrawerOpen(true)
+        }}
         className="flex flex-1 items-center justify-center gap-2 rounded bg-rust-600 px-3.5 py-2 text-[12.5px] font-semibold text-cream-50 transition-colors hover:bg-rust-700 min-[900px]:flex-none"
        >
         <Plus size={16} />
@@ -227,10 +240,11 @@ export default function ProductsPage() {
     )}
    </div>
 
-   {drawerOpen && (
+   {productDrawerOpen && (
     <ProductDrawer
      categories={categoryOptions}
-     onClose={() => setDrawerOpen(false)}
+     initialValues={chatbotDraft}
+     onClose={closeProductDrawer}
      onCreated={reload}
     />
    )}

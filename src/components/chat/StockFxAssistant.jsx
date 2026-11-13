@@ -29,6 +29,19 @@ function productNames(products, limit = 3) {
   return names.join(', ')
 }
 
+function getProductDraft(question) {
+  const match = question.match(
+    /(?:ingresa(?:r)?|agrega(?:r)?|carga(?:r)?|crea(?:r)?)(?:\s+un)?(?:\s+nuevo)?\s+(?:producto|articulo)\s*,?\s*(?:son|es|se llama)?\s*([^,]+?)(?:\s*,?\s*(?:tengo|tenemos|hay|con|stock(?:\s+de)?|tiene)\s*(\d+)\s*(?:unidades?|un\.?)?)?\s*[.!?]*$/i,
+  )
+
+  if (!match?.[1]?.trim()) return null
+
+  return {
+    nombre: match[1].trim(),
+    stockActual: match[2] || '0',
+  }
+}
+
 function buildContext(products, movements) {
   const activeProducts = products.filter((product) => product.activo)
   const lowStock = activeProducts
@@ -65,6 +78,24 @@ function buildContext(products, movements) {
 
 function getReply(question, context, hasData) {
   const value = normalize(question)
+  const productDraft = getProductDraft(question)
+
+  if (productDraft) {
+    const stockText = Number(productDraft.stockActual)
+      ? ` y un stock inicial de ${productDraft.stockActual} unidades`
+      : ''
+
+    return {
+      content: `Detecté el producto “${productDraft.nombre}”${stockText}. Voy a dejar esos datos precargados en el formulario. Solo completá SKU, categoría, precios y los límites de stock; el alta se confirma únicamente cuando presiones “Guardar producto”.`,
+      actions: [
+        {
+          label: 'Completar producto',
+          to: '/productos',
+          state: { productDraft },
+        },
+      ],
+    }
+  }
 
   if (value.includes('cargar') || value.includes('agregar') || value.includes('alta de producto')) {
     return {
@@ -210,8 +241,8 @@ export default function StockFxAssistant() {
     setInput('')
   }
 
-  const goTo = (to) => {
-    navigate(to)
+  const goTo = (action) => {
+    navigate(action.to, { state: action.state })
     setOpen(false)
   }
 
@@ -258,9 +289,9 @@ export default function StockFxAssistant() {
                   <div className="mt-2 flex flex-wrap gap-2">
                     {message.actions.map((action) => (
                       <button
-                        key={action.to}
+                        key={`${action.to}-${action.label}`}
                         type="button"
-                        onClick={() => goTo(action.to)}
+                        onClick={() => goTo(action)}
                         className="rounded-full bg-espresso px-3 py-1.5 text-[11px] font-semibold text-cream-50 transition hover:bg-espresso-light"
                       >
                         {action.label}
