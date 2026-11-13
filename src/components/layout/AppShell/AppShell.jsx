@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Menu, Package, X } from 'lucide-react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../../Sidebar/Sidebar'
+import StockFxAssistant from '../../chat/StockFxAssistant'
 import { useAuth } from '../../../context/AuthContext'
 
 function getInitials(user) {
@@ -79,6 +80,8 @@ export default function AppShell() {
           </div>
         </div>
       )}
+
+      <StockFxAssistant />
     </div>
   )
 }
