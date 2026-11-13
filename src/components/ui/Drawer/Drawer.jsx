@@ -1,18 +1,30 @@
-import { useEffect, useId, useRef } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
 export default function Drawer({ title, subtitle, headerRight, onClose, children, footer }) {
   const titleId = useId()
   const onCloseRef = useRef(onClose)
+  // Animación de salida: primero se desliza/fadeea y recién entonces se desmonta.
+  const [closing, setClosing] = useState(false)
+  const closingRef = useRef(false)
 
   useEffect(() => {
     onCloseRef.current = onClose
   }, [onClose])
 
+  const requestClose = () => {
+    if (closingRef.current) return
+    closingRef.current = true
+    setClosing(true)
+    setTimeout(onCloseRef.current, 200)
+  }
+
+  const requestCloseRef = useRef(requestClose)
+
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') onCloseRef.current()
+      if (event.key === 'Escape') requestCloseRef.current()
     }
 
     const previousOverflow = document.body.style.overflow
@@ -27,16 +39,20 @@ export default function Drawer({ title, subtitle, headerRight, onClose, children
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex justify-end bg-espresso/50 backdrop-blur-[2px]"
+      className={`fixed inset-0 z-[100] flex justify-end bg-espresso/50 backdrop-blur-[2px] transition-opacity duration-200 ${
+        closing ? 'opacity-0' : 'opacity-100'
+      }`}
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onClose()
+        if (event.target === event.currentTarget) requestClose()
       }}
     >
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="flex h-full w-full max-w-[480px] flex-col bg-white motion-safe:animate-[drawer-in_180ms_ease-out]"
+        className={`flex h-full w-full max-w-[480px] flex-col bg-white transition-transform duration-200 ease-out motion-safe:animate-[drawer-in_180ms_ease-out] ${
+          closing ? 'translate-x-full' : 'translate-x-0'
+        }`}
       >
         <header className="flex shrink-0 items-center justify-between gap-4 px-5 pb-2 pt-5 sm:px-6">
           <div className="flex min-w-0 items-center gap-2.5">
@@ -57,7 +73,7 @@ export default function Drawer({ title, subtitle, headerRight, onClose, children
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={requestClose}
             aria-label="Cerrar"
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded text-brown-600 transition-colors hover:bg-cream-100 hover:text-brown-900"
           >
