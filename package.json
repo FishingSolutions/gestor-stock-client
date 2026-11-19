@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test src/features/import/utils/*.test.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
+    "fflate": "^0.8.3",
     "lucide-react": "^1.49.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

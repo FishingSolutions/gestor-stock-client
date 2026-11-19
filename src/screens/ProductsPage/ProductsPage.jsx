@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Download, Plus } from 'lucide-react'
+import { Download, Plus, Sparkles } from 'lucide-react'
 import ProductsToolbar from '../../components/products/ProductsToolbar/ProductsToolbar'
 import ProductsTable from '../../components/products/ProductsTable/ProductsTable'
 import ProductsCards from '../../components/products/ProductsCards/ProductsCards'
@@ -9,10 +9,12 @@ import ProductsEmptyState from '../../components/products/ProductsEmptyState/Pro
 import ProductsLoading from '../../components/products/ProductsLoading/ProductsLoading'
 import ProductDrawer from '../../components/products/ProductDrawer/ProductDrawer'
 import ProductDetailDrawer from '../../components/products/ProductDetailDrawer/ProductDetailDrawer'
+import ImportProductsModal from '../../components/products/ImportProductsModal/ImportProductsModal'
 import ConfirmDialog from '../../components/ui/ConfirmDialog/ConfirmDialog'
 import ErrorState from '../../components/ui/ErrorState/ErrorState'
 import { deleteProduct } from '../../features/products/services/productsService'
 import { useProducts } from '../../features/products/hooks/useProducts'
+import { exportarProductosExcel } from '../../features/import/utils/exportProducts'
 import { useAuth } from '../../context/AuthContext'
 
 export default function ProductsPage() {
@@ -25,6 +27,8 @@ export default function ProductsPage() {
  const isAdmin = profile?.rol?.toLowerCase() === 'administrador'
  const [deleteTarget, setDeleteTarget] = useState(null)
  const [deleting, setDeleting] = useState(false)
+ const [importOpen, setImportOpen] = useState(false)
+ const [exportError, setExportError] = useState(null)
 
  const [search, setSearch] = useState('')
  const [category, setCategory] = useState('all')
@@ -112,6 +116,30 @@ export default function ProductsPage() {
 
  const resetPage = () => setPage(1)
 
+ // Exporta exactamente lo que se está viendo: búsqueda, categoría, estado y orden.
+ // El archivo se puede volver a importar con "Importar con IA".
+ const handleExportar = () => {
+  setExportError(null)
+
+  if (sorted.length === 0) {
+   setExportError('No hay productos para exportar con los filtros actuales.')
+   return
+  }
+
+  try {
+   const partes = [
+    search.trim(),
+    category !== 'all' ? category : '',
+    activeFilter !== 'todos' ? activeFilter : '',
+   ].filter(Boolean)
+
+   const sufijo = partes.join('-').replace(/[^\w-]+/g, '_').slice(0, 40)
+   exportarProductosExcel(sorted, { sufijo })
+  } catch (error) {
+   setExportError(error.message ?? 'No se pudo exportar el archivo.')
+  }
+ }
+
  const clearFilters = () => {
   setSearch('')
   setCategory('all')
@@ -144,14 +172,26 @@ export default function ProductsPage() {
       </h1>
      </div>
 
-     <div className="flex gap-2">
+     <div className="flex flex-wrap gap-2">
       <button
        type="button"
+       onClick={handleExportar}
+       title="Exportar el listado filtrado a Excel"
        className="flex flex-1 items-center justify-center gap-2 rounded bg-espresso px-3.5 py-2 text-[12.5px] font-semibold text-cream-50 transition-colors hover:bg-espresso-light min-[900px]:flex-none"
       >
        <Download size={16} />
        Exportar
       </button>
+      {isAdmin && (
+       <button
+        type="button"
+        onClick={() => setImportOpen(true)}
+        className="flex flex-1 items-center justify-center gap-2 rounded bg-cream-200 px-3.5 py-2 text-[12.5px] font-semibold text-brown-700 transition-colors hover:bg-cream-300 min-[900px]:flex-none"
+       >
+        <Sparkles size={16} />
+        Importar con IA
+       </button>
+      )}
       {isAdmin && (
        <button
         type="button"
@@ -166,6 +206,19 @@ export default function ProductsPage() {
       )}
      </div>
     </header>
+
+    {exportError && (
+     <div className="mt-3 flex items-center justify-between gap-3 rounded bg-stock-red-bg px-3 py-2 text-[11.5px] text-stock-red">
+      <span>{exportError}</span>
+      <button
+       type="button"
+       onClick={() => setExportError(null)}
+       className="font-semibold underline-offset-2 hover:underline"
+      >
+       Cerrar
+      </button>
+     </div>
+    )}
 
     {loading ? (
      <div className="mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto scrollbar-custom">
@@ -295,6 +348,12 @@ export default function ProductsPage() {
      }
     }}
    />
+   {importOpen && (
+    <ImportProductsModal
+     onClose={() => setImportOpen(false)}
+     onImported={reload}
+    />
+   )}
   </>
  )
 }
