@@ -69,6 +69,17 @@ export function formatearMoneda(valor) {
   return `$${numero.format(Number(valor))}`
 }
 
+export function modoStockValido(modo) {
+  return modo === 'REEMPLAZAR' || modo === 'SUMAR'
+}
+
+/** Muestra el valor propuesto de altas nuevas, aunque todavía no haya un valor actual. */
+export function debeMostrarValorPropuesto(actual, nuevo) {
+  if (actual === null || actual === undefined) return true
+  if (nuevo === null || nuevo === undefined) return false
+  return Number(actual) !== Number(nuevo)
+}
+
 /** Stock que quedará si se importa con el modo elegido. */
 export function stockPropuesto(fila, modo) {
   if (!fila) return null

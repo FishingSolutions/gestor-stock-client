@@ -18,6 +18,7 @@ import {
 } from '../../../features/import/services/importService'
 import {
   claseEstado,
+  modoStockValido,
   formatearNumero,
   mensajeIA,
   resumirSeleccion,
@@ -134,6 +135,7 @@ export default function ImportProductsModal({ onClose, onImported }) {
   const [mostrarMapeo, setMostrarMapeo] = useState(false)
 
   const onCloseRef = useRef(onClose)
+  const secuenciaAnalisisRef = useRef(0)
 
   useEffect(() => {
     onCloseRef.current = onClose
@@ -187,6 +189,7 @@ export default function ImportProductsModal({ onClose, onImported }) {
   }
 
   const analizar = async (file, { modoStock = modo, mapeoEnviado = null } = {}) => {
+    const secuencia = ++secuenciaAnalisisRef.current
     setCargando(true)
     setError(null)
 
@@ -199,12 +202,14 @@ export default function ImportProductsModal({ onClose, onImported }) {
         iaToken: mapeoEnviado ? analisis?.iaToken : null,
       })
 
-      aplicarAnalisis(datos, file)
+      if (secuencia === secuenciaAnalisisRef.current) aplicarAnalisis(datos, file)
     } catch (fallo) {
-      setError(fallo)
-      if (!analisis) setPaso('archivo')
+      if (secuencia === secuenciaAnalisisRef.current) {
+        setError(fallo)
+        if (!analisis) setPaso('archivo')
+      }
     } finally {
-      setCargando(false)
+      if (secuencia === secuenciaAnalisisRef.current) setCargando(false)
     }
   }
 
@@ -217,8 +222,14 @@ export default function ImportProductsModal({ onClose, onImported }) {
   }
 
   const cambiarModo = (nuevoModo) => {
+    if (!modoStockValido(nuevoModo) || nuevoModo === modo) return
     setModo(nuevoModo)
-    if (archivo) analizar(archivo, { modoStock: nuevoModo, mapeo })
+    if (archivo) {
+      analizar(archivo, {
+        modoStock: nuevoModo,
+        mapeoEnviado: mapeo,
+      })
+    }
   }
 
   const cambiarMapeo = (campo, columna) => {
@@ -242,6 +253,10 @@ export default function ImportProductsModal({ onClose, onImported }) {
 
   const confirmar = async () => {
     if (!archivo || !clave || pendientes > 0) return
+    if (hayColumnaStock && !modoStockValido(modo)) {
+      setError(new Error('Elegí si querés reemplazar o sumar las existencias antes de confirmar.'))
+      return
+    }
 
     setCargando(true)
     setError(null)
@@ -458,9 +473,13 @@ export default function ImportProductsModal({ onClose, onImported }) {
 
               {hayColumnaStock && (
                 <section className="rounded-lg border border-cream-200 px-3 py-3">
-                  <h3 className="text-[12.5px] font-bold text-brown-900">
+                  <fieldset
+                    aria-busy={cargando}
+                    className="min-w-0"
+                  >
+                  <legend className="text-[12.5px] font-bold text-brown-900">
                     ¿Qué hacemos con el stock de los productos existentes?
-                  </h3>
+                  </legend>
                   <p className="mt-0.5 text-[11px] text-brown-500">
                     Es obligatorio elegirlo: no se adivina. Los productos nuevos siempre entran con
                     el stock de la planilla.
@@ -469,35 +488,43 @@ export default function ImportProductsModal({ onClose, onImported }) {
                   <div className="mt-2 grid grid-cols-1 gap-2 min-[640px]:grid-cols-2">
                     {MODOS.map((opcion) => {
                       const activo = modo === opcion.valor
+                      const descripcionId = `modo-stock-${opcion.valor.toLowerCase()}-descripcion`
                       return (
-                        <button
+                        <label
                           key={opcion.valor}
-                          type="button"
-                          disabled={cargando}
-                          onClick={() => cambiarModo(opcion.valor)}
-                          className={`rounded-lg border px-3 py-2.5 text-left transition-colors ${
+                          className={`flex cursor-pointer items-start gap-2 rounded-lg border px-3 py-2.5 transition-colors ${
                             activo
                               ? 'border-rust-600 bg-rust-600/5'
                               : 'border-cream-300 bg-white hover:border-cream-400'
                           }`}
                         >
-                          <span className="flex items-center gap-2 text-[12px] font-semibold text-brown-900">
-                            <span
-                              className={`flex h-3.5 w-3.5 items-center justify-center rounded-full border ${
-                                activo ? 'border-rust-600' : 'border-brown-400'
-                              }`}
-                            >
-                              {activo && <span className="h-2 w-2 rounded-full bg-rust-600" />}
+                          <input
+                            type="radio"
+                            name="modoStock"
+                            value={opcion.valor}
+                            checked={activo}
+                            onChange={() => cambiarModo(opcion.valor)}
+                            aria-describedby={descripcionId}
+                            className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-rust-600 focus:ring-2 focus:ring-rust-500"
+                          />
+                          <span>
+                            <span className="block text-[12px] font-semibold text-brown-900">
+                              {opcion.titulo}
                             </span>
-                            {opcion.titulo}
+                            <span id={descripcionId} className="mt-1 block text-[11px] text-brown-500">
+                              {opcion.descripcion}
+                            </span>
                           </span>
-                          <span className="mt-1 block pl-5 text-[11px] text-brown-500">
-                            {opcion.descripcion}
-                          </span>
-                        </button>
+                        </label>
                       )
                     })}
                   </div>
+                  {cargando && (
+                    <p role="status" aria-live="polite" className="mt-2 text-[11px] text-brown-500">
+                      Actualizando la vista previa; podés cambiar la opción de stock.
+                    </p>
+                  )}
+                  </fieldset>
                 </section>
               )}
 
@@ -631,7 +658,12 @@ export default function ImportProductsModal({ onClose, onImported }) {
                 <button
                   type="button"
                   onClick={confirmar}
-                  disabled={cargando || pendientes > 0 || (hayColumnaStock && !modo) || Boolean(analisis?.necesitaMapeo)}
+                  disabled={
+                    cargando ||
+                    pendientes > 0 ||
+                    (hayColumnaStock && !modoStockValido(modo)) ||
+                    Boolean(analisis?.necesitaMapeo)
+                  }
                   className={claseBotonPrimario}
                 >
                   {cargando ? <Loader2 size={14} className="animate-spin" /> : null}

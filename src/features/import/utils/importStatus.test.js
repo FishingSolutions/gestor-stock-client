@@ -3,10 +3,12 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import {
   claseEstado,
+  debeMostrarValorPropuesto,
   etiquetaEstado,
   formatearMoneda,
   formatearNumero,
   mensajeIA,
+  modoStockValido,
   resumirSeleccion,
   stockPropuesto,
   tieneCambioDeStock,
@@ -41,6 +43,22 @@ test('formatea números y precios en formato argentino', () => {
   assert.equal(formatearNumero(1500), '1.500')
   assert.equal(formatearNumero(null), '—')
   assert.equal(formatearMoneda(1500.5), '$1.500,5')
+})
+
+test('la vista previa muestra valores propuestos para productos nuevos', () => {
+  assert.equal(debeMostrarValorPropuesto(null, 18), true)
+  assert.equal(debeMostrarValorPropuesto(undefined, 1250.5), true)
+  assert.equal(debeMostrarValorPropuesto(18, 18), false)
+  assert.equal(debeMostrarValorPropuesto(18, 20), true)
+  assert.equal(debeMostrarValorPropuesto(18, null), false)
+})
+
+test('solo los dos modos disponibles son válidos para confirmar stock', () => {
+  assert.equal(modoStockValido('REEMPLAZAR'), true)
+  assert.equal(modoStockValido('SUMAR'), true)
+  assert.equal(modoStockValido(null), false)
+  assert.equal(modoStockValido(''), false)
+  assert.equal(modoStockValido('OTRO'), false)
 })
 
 test('el stock propuesto depende del modo elegido', () => {

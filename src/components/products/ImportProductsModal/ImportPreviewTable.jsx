@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import {
   claseEstado,
+  debeMostrarValorPropuesto,
   etiquetaEstado,
   formatearMoneda,
   formatearNumero,
@@ -23,16 +24,21 @@ const claseSelect =
   'h-8 w-full max-w-[260px] rounded border border-cream-300 bg-white px-2 text-[11.5px] text-brown-900 outline-none transition focus:border-rust-500 focus:ring-2 focus:ring-rust-500/20 disabled:bg-cream-100'
 
 function CeldaCambio({ actual, nuevo, formato = formatearNumero }) {
-  const hayCambio = actual !== null && actual !== undefined && nuevo !== null && nuevo !== undefined && Number(actual) !== Number(nuevo)
+  const mostrarNuevo = debeMostrarValorPropuesto(actual, nuevo)
 
   return (
     <span className="whitespace-nowrap">
-      <span className="text-brown-500">{formato(actual)}</span>
-      {hayCambio && (
+      {actual !== null && actual !== undefined && (
+        <span className="text-brown-500">{formato(actual)}</span>
+      )}
+      {mostrarNuevo && actual !== null && actual !== undefined && (
         <>
           <span className="mx-1 text-brown-400">→</span>
           <span className="font-semibold text-brown-900">{formato(nuevo)}</span>
         </>
+      )}
+      {mostrarNuevo && (actual === null || actual === undefined) && (
+        <span className="font-semibold text-brown-900">{formato(nuevo)}</span>
       )}
     </span>
   )
