@@ -35,6 +35,8 @@ test('cada estado tiene etiqueta y color', () => {
 test('solo se muestran mensajes de IA conocidos', () => {
   assert.match(mensajeIA('IA_NO_CONFIGURADA'), /IA no configurada/)
   assert.match(mensajeIA('IA_TIMEOUT'), /no respondió/)
+  assert.match(mensajeIA('IA_ERROR_HTTP_503'), /temporalmente no disponible/)
+  assert.match(mensajeIA('IA_ERROR_HTTP_404'), /endpoint o modelo/)
   assert.equal(mensajeIA(null), null)
   assert.equal(mensajeIA('NO_HIZO_FALTA'), null)
 })

@@ -49,6 +49,12 @@ export const MENSAJES_IA = {
   IA_RESPUESTA_INVALIDA: 'La IA devolvió una respuesta inválida: se usó el mapeo por encabezados.',
   IA_RESPUESTA_VACIA: 'La IA no devolvió nada: se usó el mapeo por encabezados.',
   IA_NO_DISPONIBLE: 'No se pudo contactar a la IA: se usó el mapeo por encabezados.',
+  IA_ERROR_HTTP_400: 'El proveedor rechazó la solicitud de interpretación (400): se usó el mapeo por encabezados.',
+  IA_ERROR_HTTP_401: 'El proveedor no autorizó la solicitud (401). Revisá la credencial configurada; se usó el mapeo por encabezados.',
+  IA_ERROR_HTTP_403: 'La credencial no tiene permiso para usar este modelo (403); se usó el mapeo por encabezados.',
+  IA_ERROR_HTTP_404: 'No se encontró el endpoint o modelo configurado (404); se usó el mapeo por encabezados.',
+  IA_ERROR_HTTP_500: 'El proveedor encontró un error interno (500); se usó el mapeo por encabezados.',
+  IA_ERROR_HTTP_503: 'El proveedor de IA está temporalmente no disponible (503); se usó el mapeo por encabezados.',
   IA_SIN_APORTES: 'La IA no aportó columnas nuevas: se usó el mapeo por encabezados.',
 }
 
