@@ -77,13 +77,20 @@ async function invocar(datos) {
  * Paso 1: analiza el archivo sin escribir nada.
  * @param {{archivo: File, hoja?: string|null, modoStock?: 'REEMPLAZAR'|'SUMAR'|null, mapeo?: object|null}} opciones
  */
-export async function analizarImportacion({ archivo, hoja = null, modoStock = null, mapeo = null }) {
+export async function analizarImportacion({
+  archivo,
+  hoja = null,
+  modoStock = null,
+  mapeo = null,
+  iaToken = null,
+}) {
   const datos = new FormData()
   datos.append('accion', 'analizar')
   datos.append('archivo', archivo)
   if (hoja) datos.append('hoja', hoja)
   if (modoStock) datos.append('modoStock', modoStock)
   if (mapeo) datos.append('mapeo', JSON.stringify(mapeo))
+  if (iaToken) datos.append('iaToken', iaToken)
 
   return invocar(datos)
 }
@@ -99,7 +106,7 @@ export async function confirmarImportacion({
   decisiones = {},
   crearCategorias = false,
   idempotencyKey,
-  ia = null,
+  iaToken = null,
 }) {
   const datos = new FormData()
   datos.append('accion', 'confirmar')
@@ -110,7 +117,7 @@ export async function confirmarImportacion({
   if (hoja) datos.append('hoja', hoja)
   if (modoStock) datos.append('modoStock', modoStock)
   if (mapeo) datos.append('mapeo', JSON.stringify(mapeo))
-  if (ia) datos.append('ia', JSON.stringify(ia))
+  if (iaToken) datos.append('iaToken', iaToken)
 
   return invocar(datos)
 }

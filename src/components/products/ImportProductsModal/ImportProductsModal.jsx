@@ -127,7 +127,6 @@ export default function ImportProductsModal({ onClose, onImported }) {
   const [incluidas, setIncluidas] = useState({})
   const [resoluciones, setResoluciones] = useState({})
   const [crearCategorias, setCrearCategorias] = useState(false)
-  const [ia, setIa] = useState(null)
   const [clave, setClave] = useState(null)
   const [cargando, setCargando] = useState(false)
   const [error, setError] = useState(null)
@@ -174,7 +173,6 @@ export default function ImportProductsModal({ onClose, onImported }) {
     setAnalisis(datos)
     setMapeo(datos.mapeo ?? {})
     setModo((actual) => datos.modoStock ?? actual)
-    setIa(datos.ia ?? null)
     setIncluidas((previas) => {
       const siguientes = { ...previas }
       for (const fila of datos.filas ?? []) {
@@ -195,13 +193,13 @@ export default function ImportProductsModal({ onClose, onImported }) {
     try {
       const datos = await analizarImportacion({
         archivo: file,
+        hoja: mapeoEnviado ? analisis?.archivo?.hoja : null,
         modoStock,
         mapeo: mapeoEnviado,
+        iaToken: mapeoEnviado ? analisis?.iaToken : null,
       })
 
-      // Al reanalizar con un mapeo ya revisado no se vuelve a llamar a la IA:
-      // se conserva la información de la primera llamada.
-      aplicarAnalisis(mapeoEnviado && analisis?.ia ? { ...datos, ia: analisis.ia } : datos, file)
+      aplicarAnalisis(datos, file)
     } catch (fallo) {
       setError(fallo)
       if (!analisis) setPaso('archivo')
@@ -215,7 +213,6 @@ export default function ImportProductsModal({ onClose, onImported }) {
     setResoluciones({})
     setIncluidas({})
     setClave(crearClaveIdempotencia())
-    setIa(null)
     analizar(file, { modoStock: null })
   }
 
@@ -276,12 +273,13 @@ export default function ImportProductsModal({ onClose, onImported }) {
     try {
       const datos = await confirmarImportacion({
         archivo,
+        hoja: analisis?.archivo?.hoja,
         modoStock: modo,
         mapeo,
         decisiones,
         crearCategorias,
         idempotencyKey: clave,
-        ia,
+        iaToken: analisis?.iaToken,
       })
       setResultado(datos)
       setPaso('resultado')
@@ -301,7 +299,6 @@ export default function ImportProductsModal({ onClose, onImported }) {
     setModo(null)
     setIncluidas({})
     setResoluciones({})
-    setIa(null)
     setClave(null)
     setResultado(null)
     setError(null)
