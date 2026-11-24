@@ -12,6 +12,9 @@ Aplicación web desarrollada en React con Vite para la gestión y control de inv
 
 ## Instalación local
 
+Requiere Node.js `20.19+` (rama 20), `22.13+` (rama 22) o `24+`, de acuerdo con
+los requisitos de Vite y ESLint declarados en `package.json`.
+
 1. Clonar el repositorio:
    ```bash
    git clone git@github.com:FishingSolutions/gestor-stock-client.git
